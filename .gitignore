@@ -1,0 +1,7 @@
+# Ignore every file and folder here…
+*
+
+# …except the notes page, the README, and this file itself.
+!.gitignore
+!README.md
+!Computer-Science-Grade10-Notes.html

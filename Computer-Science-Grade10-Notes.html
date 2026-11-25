@@ -1,0 +1,2403 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Computer Science — Grade 10 Notes (Units 1–6)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Crect width='44' height='44' rx='6' fill='%230E5E4A'/%3E%3Ctext x='22' y='30.5' text-anchor='middle' font-family='Georgia,serif' font-size='21' font-weight='700' fill='%23FCFDF9'%3E10%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Condensed, exam-focused notes for the NBF Grade 10 Computer Science textbook, Units 1 to 6.">
+<style>
+/* ---------------------------------------------------------------
+   Tokens
+   --------------------------------------------------------------- */
+:root{
+  --paper:#E9EDE5;
+  --paper-deep:#DFE6DA;
+  --surface:#FCFDF9;
+  --surface-2:#F1F5ED;
+  --ink:#14211B;
+  --ink-soft:#4C5C53;
+  --ink-faint:#71857A;
+  --line:#C7D3C6;
+  --line-strong:#9DAF9F;
+  --emerald:#0E5E4A;
+  --emerald-soft:#DCEAE0;
+  --amber:#A8640F;
+  --amber-soft:#F7EAD4;
+  --blue:#2A5C8A;
+  --blue-soft:#E1ECF5;
+  --oxblood:#8B2340;
+  --oxblood-soft:#F6E3E9;
+  --shadow:0 1px 0 rgba(20,33,27,.04), 0 12px 28px -22px rgba(20,33,27,.55);
+  --maxw:1080px;
+  --serif:"Palatino Linotype","Book Antiqua",Palatino,"Iowan Old Style",Georgia,serif;
+  --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --mono:"Cascadia Mono",Consolas,"SF Mono","Courier New",monospace;
+}
+[data-theme="dark"]{
+  --paper:#0F1612;
+  --paper-deep:#0B110E;
+  --surface:#161F1A;
+  --surface-2:#1B2721;
+  --ink:#E7EEE7;
+  --ink-soft:#A5B6AA;
+  --ink-faint:#7C8F83;
+  --line:#2A3831;
+  --line-strong:#44584C;
+  --emerald:#63C4A0;
+  --emerald-soft:#153329;
+  --amber:#E2A65E;
+  --amber-soft:#33261A;
+  --blue:#8BB8DF;
+  --blue-soft:#16293A;
+  --oxblood:#E68CA3;
+  --oxblood-soft:#331B24;
+  --shadow:0 1px 0 rgba(0,0,0,.2), 0 16px 30px -24px #000;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-wrap:break-word;
+}
+/* faint engineering grid on the paper */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background-image:
+    linear-gradient(to right, rgba(14,94,74,.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(14,94,74,.055) 1px, transparent 1px);
+  background-size:34px 34px;
+  mask-image:linear-gradient(to bottom, rgba(0,0,0,.9), rgba(0,0,0,.35) 60%, transparent);
+}
+[data-theme="dark"] body::before{
+  background-image:
+    linear-gradient(to right, rgba(99,196,160,.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99,196,160,.06) 1px, transparent 1px);
+}
+img,svg{max-width:100%}
+a{color:inherit}
+::selection{background:var(--emerald);color:#fff}
+
+/* ---------------------------------------------------------------
+   Reading progress + header
+   --------------------------------------------------------------- */
+.progress{
+  position:fixed;top:0;left:0;height:3px;width:0%;
+  background:linear-gradient(90deg,var(--emerald),var(--blue));
+  z-index:60;transition:width .12s linear;
+}
+.site-head{
+  position:sticky;top:0;z-index:50;
+  background:var(--paper);
+  background:color-mix(in srgb, var(--paper) 82%, transparent);
+  backdrop-filter:blur(10px) saturate(120%);
+  border-bottom:1px solid var(--line);
+}
+.head-in{
+  max-width:var(--maxw);margin:0 auto;padding:.6rem 1.25rem;
+  display:flex;align-items:center;gap:1.25rem;
+}
+.brand{display:flex;align-items:center;gap:.65rem;text-decoration:none;flex:none}
+.logo{width:38px;height:38px;flex:none;display:block}
+.brand-txt{display:flex;flex-direction:column;line-height:1.15}
+.brand-txt b{font-family:var(--serif);font-size:1rem;font-weight:700}
+.brand-txt span{font-family:var(--mono);font-size:.66rem;color:var(--ink-faint);letter-spacing:.04em}
+
+.unitnav{margin-left:auto;display:flex;align-items:center;gap:.15rem;overflow-x:auto;min-width:0;scrollbar-width:none}
+.unitnav::-webkit-scrollbar{display:none}
+.unitnav a{
+  display:flex;align-items:baseline;gap:.4rem;
+  padding:.4rem .6rem;border-radius:2px;text-decoration:none;
+  font-size:.78rem;color:var(--ink-soft);white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:color .15s, border-color .15s, background .15s;
+}
+.unitnav a .un{font-family:var(--mono);font-size:.68rem;color:var(--ink-faint)}
+.unitnav a:hover{color:var(--ink);background:var(--surface-2)}
+.unitnav a.on{color:var(--emerald);border-bottom-color:var(--emerald)}
+.unitnav a.on .un{color:var(--emerald)}
+.theme-btn{
+  flex:none;margin-left:.4rem;width:34px;height:34px;display:grid;place-items:center;
+  border:1px solid var(--line);background:var(--surface);border-radius:2px;
+  color:var(--ink-soft);cursor:pointer;
+}
+.theme-btn:hover{border-color:var(--line-strong);color:var(--ink)}
+.theme-btn svg{width:16px;height:16px}
+[data-theme="dark"] .icon-sun{display:block}
+[data-theme="dark"] .icon-moon{display:none}
+.icon-sun{display:none}
+
+/* ---------------------------------------------------------------
+   Layout
+   --------------------------------------------------------------- */
+.wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 1.25rem}
+
+/* ---------------------------------------------------------------
+   Hero
+   --------------------------------------------------------------- */
+.hero{padding:3.5rem 0 2.5rem;display:grid;grid-template-columns:1.12fr .88fr;gap:3rem;align-items:start}
+.kicker{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);
+  margin:0 0 1.1rem;
+}
+.kicker::before{content:"";width:26px;height:1px;background:var(--emerald)}
+.hero h1{
+  font-family:var(--serif);
+  font-size:clamp(2.6rem,5.4vw,4.1rem);
+  line-height:1.02;letter-spacing:-.02em;margin:0 0 .35rem;font-weight:700;
+}
+.hero h1 em{font-style:italic;color:var(--emerald)}
+.hero .grade{
+  font-family:var(--mono);font-size:.95rem;color:var(--ink-soft);
+  display:block;margin-bottom:1.3rem;
+}
+.hero p.lede{max-width:46ch;color:var(--ink-soft);margin:0 0 1.6rem;font-size:1.02rem}
+.hero-meta{display:flex;flex-wrap:wrap;gap:.4rem}
+.chip{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.02em;
+  padding:.3rem .55rem;border:1px solid var(--line);border-radius:2px;
+  color:var(--ink-soft);background:var(--surface);
+}
+.chip strong{color:var(--emerald);font-weight:700}
+
+/* path = chapter map / bookmarks */
+.path{margin:0;padding:0;list-style:none;position:relative}
+.path::before{
+  content:"";position:absolute;left:15px;top:14px;bottom:14px;width:1px;
+  background:linear-gradient(to bottom,var(--emerald),var(--line) 70%,transparent);
+}
+.path li{position:relative}
+.path a{
+  display:grid;grid-template-columns:32px 1fr;gap:.85rem;align-items:start;
+  padding:.55rem 0;text-decoration:none;color:inherit;
+}
+.path .dot{
+  width:31px;height:31px;border-radius:50%;display:grid;place-items:center;
+  background:var(--paper);border:1px solid var(--line-strong);
+  font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);
+  transition:border-color .15s, color .15s, background .15s;
+}
+.path b{font-family:var(--serif);font-size:1.02rem;display:block;line-height:1.3}
+.path small{color:var(--ink-faint);font-size:.79rem;display:block;line-height:1.4}
+.path a:hover .dot{border-color:var(--emerald);color:var(--emerald);background:var(--emerald-soft)}
+.path a:hover b{color:var(--emerald)}
+
+.legend{
+  display:flex;flex-wrap:wrap;gap:1.4rem;
+  margin-top:2.6rem;padding:1rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  font-size:.8rem;color:var(--ink-soft);
+}
+.legend span{display:inline-flex;align-items:center;gap:.45rem}
+.legend i{width:9px;height:9px;border-radius:1px;display:inline-block}
+
+/* ---------------------------------------------------------------
+   Units
+   --------------------------------------------------------------- */
+.unit{padding:3.2rem 0 1rem;scroll-margin-top:70px}
+.unit + .unit{border-top:1px solid var(--line)}
+.unit-head{margin-bottom:2.2rem}
+.unit-no{
+  font-family:var(--mono);font-size:.75rem;letter-spacing:.16em;
+  color:var(--emerald);display:block;margin-bottom:.5rem;
+}
+.unit-head h2{
+  font-family:var(--serif);font-size:clamp(2rem,4vw,2.9rem);
+  line-height:1.08;margin:0 0 .7rem;letter-spacing:-.015em;
+}
+.unit-head .standfirst{
+  max-width:62ch;color:var(--ink-soft);margin:0 0 1.4rem;font-size:1.02rem;
+}
+.unit-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:1.6rem;align-items:start}
+.learn{
+  list-style:none;margin:0;padding:1rem 1.1rem;background:var(--surface);
+  border:1px solid var(--line);border-left:3px solid var(--emerald);border-radius:2px;
+}
+.learn li{font-size:.86rem;color:var(--ink-soft);padding:.28rem 0 .28rem 1.15rem;position:relative}
+.learn li::before{content:"→";position:absolute;left:0;color:var(--emerald);font-family:var(--mono);font-size:.8rem}
+.keyterms{display:flex;flex-wrap:wrap;gap:.35rem;align-content:flex-start}
+.keyterms .chip{background:var(--surface-2);border-color:transparent;color:var(--ink-soft);font-size:.68rem}
+
+h3.sec{
+  font-family:var(--serif);font-size:1.42rem;line-height:1.25;
+  margin:2.4rem 0 .7rem;letter-spacing:-.01em;
+  display:flex;gap:.6rem;align-items:baseline;scroll-margin-top:80px;
+}
+h3.sec .n{
+  font-family:var(--mono);font-size:.74rem;font-weight:400;
+  color:var(--emerald);flex:none;padding-top:.15rem;
+}
+h4{font-family:var(--sans);font-size:.95rem;margin:1.3rem 0 .35rem;letter-spacing:.01em}
+p{margin:0 0 .9rem}
+.unit p, .unit li{max-width:72ch}
+ul.plain{margin:.2rem 0 1rem;padding-left:1.1rem}
+ul.plain li{margin:.3rem 0}
+strong{font-weight:650}
+.term{font-weight:650;color:var(--ink)}
+.mono{font-family:var(--mono);font-size:.86em;background:var(--surface-2);padding:.06em .3em;border-radius:2px}
+
+/* callouts */
+.callout{
+  margin:1.2rem 0;padding:.85rem 1rem .9rem;
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--amber);border-radius:2px;
+  font-size:.92rem;
+}
+.callout p{margin:0;max-width:68ch}
+.callout p + p{margin-top:.45rem}
+.callout .tag{
+  display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;
+  color:var(--amber);margin-bottom:.25rem;
+}
+.callout.tip{border-left-color:var(--oxblood)}
+.callout.tip .tag{color:var(--oxblood)}
+.callout.code{border-left-color:var(--blue)}
+.callout.code .tag{color:var(--blue)}
+.callout.key{border-left-color:var(--emerald);background:var(--emerald-soft);border-color:transparent}
+.callout.key .tag{color:var(--emerald)}
+
+/* tables */
+.tablewrap{overflow-x:auto;margin:1.1rem 0 1.4rem;border:1px solid var(--line);border-radius:2px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+caption{caption-side:top;text-align:left;font-family:var(--mono);font-size:.7rem;color:var(--ink-faint);padding:.6rem .8rem 0}
+th,td{padding:.55rem .8rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{
+  background:var(--surface-2);font-size:.72rem;font-family:var(--mono);
+  letter-spacing:.06em;color:var(--ink-soft);font-weight:600;white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none}
+td .mono{background:transparent;padding:0}
+td.num,th.num{font-family:var(--mono);font-size:.8rem}
+
+/* figures */
+.fig{margin:1.4rem 0;padding:1rem;background:var(--surface);border:1px solid var(--line);border-radius:2px}
+.fig svg{display:block;width:100%;height:auto;font-family:var(--mono);font-size:9px}
+.fig figcaption{font-size:.75rem;color:var(--ink-faint);margin-top:.6rem;padding-top:.55rem;border-top:1px dashed var(--line)}
+.fig .cap-n{color:var(--emerald);font-family:var(--mono);margin-right:.4rem}
+.cap-tag{
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--emerald);border:1px solid var(--emerald);border-radius:2px;
+  padding:.05rem .3rem;margin-left:.45rem;vertical-align:.1em;
+}
+/* figures you can touch */
+.fig g.layer{cursor:pointer}
+.fig g.layer rect{transition:stroke-width .12s ease}
+.fig g.layer:hover rect,.fig g.layer:focus-visible rect{stroke-width:2.6}
+.fig g.layer:focus{outline:none}
+.fig g.layer.on rect{stroke-width:2.6}
+.fig-note{
+  font-size:.78rem;line-height:1.5;color:var(--ink-soft);
+  margin:.75rem 0 0;padding:.5rem .7rem;min-height:2.6em;
+  background:var(--emerald-soft);border-left:2px solid var(--emerald);border-radius:2px;
+}
+.fig-note b{color:var(--ink)}
+
+/* buttons */
+.btn{
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.02em;
+  padding:.5rem .85rem;min-height:40px;border-radius:2px;cursor:pointer;
+  border:1px solid var(--emerald);background:var(--emerald);color:#FCFDF9;
+  transition:filter .15s, background .15s;
+}
+.btn:hover:not(:disabled){filter:brightness(1.12)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:var(--surface);color:var(--ink-soft);border-color:var(--line-strong)}
+.btn.ghost:hover:not(:disabled){background:var(--surface-2);color:var(--ink)}
+.bs-stage svg{display:block;width:100%;height:auto}
+.bs-stage svg text{font-size:11px}
+.bs-controls{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:.8rem}
+.bs-meta{font-family:var(--mono);font-size:.72rem;color:var(--ink-faint);margin-left:auto}
+.bs-status{font-size:.8rem;color:var(--ink-soft);margin:.7rem 0 0;min-height:1.4em}
+
+/* bit strip */
+.bits{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin:.2rem 0 .6rem}
+.bits div{text-align:center;font-family:var(--mono)}
+.bits .w{font-size:.62rem;color:var(--ink-faint);padding-bottom:.2rem}
+.bits .b{
+  font-size:1.1rem;padding:.45rem 0;background:var(--surface-2);
+  border:1px solid var(--line);border-radius:2px;color:var(--ink-soft);
+}
+.bits .b.one{background:var(--emerald-soft);border-color:var(--emerald);color:var(--emerald);font-weight:700}
+
+/* converter */
+.tool{
+  margin:1.3rem 0;padding:1rem 1.1rem;background:var(--surface);
+  border:1px solid var(--line);border-radius:2px;
+}
+.tool h4{margin:0 0 .15rem;font-family:var(--serif);font-size:1rem;font-weight:700}
+.tool .hint{font-size:.76rem;color:var(--ink-faint);margin:0 0 .7rem}
+.tool-row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.tool input{
+  font-family:var(--mono);font-size:1rem;width:9rem;padding:.45rem .6rem;
+  background:var(--paper);border:1px solid var(--line-strong);border-radius:2px;color:var(--ink);
+}
+.tool input:focus{outline:2px solid var(--emerald);outline-offset:1px}
+.tool .out{
+  font-family:var(--mono);font-size:1.05rem;color:var(--emerald);
+  letter-spacing:.06em;padding:.35rem .55rem;background:var(--emerald-soft);border-radius:2px;
+}
+.tool .out.err{color:var(--oxblood);background:var(--oxblood-soft);letter-spacing:0;font-size:.85rem}
+.tool .note{font-size:.72rem;color:var(--ink-faint);margin:.6rem 0 0}
+
+/* code */
+pre{
+  margin:1rem 0 1.3rem;padding:.9rem 1rem;overflow-x:auto;
+  background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--blue);
+  border-radius:2px;font-family:var(--mono);font-size:.78rem;line-height:1.65;color:var(--ink);
+}
+pre .c{color:var(--ink-faint);font-style:italic}
+pre .t{color:var(--blue)}
+pre .s{color:var(--emerald)}
+code{font-family:var(--mono);font-size:.86em}
+
+/* quick check */
+.qa{margin:1.6rem 0 0;border-top:1px solid var(--line);padding-top:1rem}
+.qa > p.lbl{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;color:var(--ink-faint);margin:0 0 .5rem}
+details{border:1px solid var(--line);background:var(--surface);border-radius:2px;margin-bottom:.45rem}
+details[open]{border-color:var(--line-strong)}
+summary{
+  cursor:pointer;padding:.6rem .8rem;font-size:.88rem;font-weight:600;
+  list-style:none;display:flex;gap:.6rem;align-items:flex-start;
+}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"?";font-family:var(--mono);color:var(--emerald);flex:none;font-size:.8rem;line-height:1.5}
+details[open] summary::before{content:"✓"}
+details .ans{padding:0 .85rem .8rem 2rem;font-size:.85rem;color:var(--ink-soft)}
+details .ans p{margin:0}
+
+/* summary strip */
+.breath{
+  margin:2.2rem 0 0;padding:1.1rem 1.2rem;background:var(--surface);
+  border:1px solid var(--line);border-top:3px solid var(--ink);border-radius:2px;
+}
+.breath h4{margin:0 0 .5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;color:var(--ink-faint);font-weight:600}
+.breath p{font-size:.9rem;margin:0;color:var(--ink-soft)}
+
+/* footer */
+.end{margin-top:4rem;padding:2.5rem 0 4rem;border-top:1px solid var(--line)}
+.end h2{font-family:var(--serif);font-size:1.9rem;margin:0 0 .4rem}
+.end p{color:var(--ink-soft);font-size:.9rem;max-width:70ch}
+.end .fine{font-size:.75rem;color:var(--ink-faint);margin-top:1.5rem}
+
+.top{
+  position:fixed;right:1.2rem;bottom:1.2rem;z-index:45;
+  width:38px;height:38px;display:grid;place-items:center;
+  background:var(--surface);border:1px solid var(--line-strong);border-radius:2px;
+  color:var(--ink-soft);cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s;
+}
+.top.show{opacity:1;pointer-events:auto}
+
+/* focus */
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
+  outline:2px solid var(--emerald);outline-offset:2px;
+}
+
+/* tapping, not hovering */
+a,button,summary,label{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+
+/* ---------------------------------------------------------------
+   Responsive
+   --------------------------------------------------------------- */
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;gap:2rem;padding:2.6rem 0 2rem}
+  .unit-grid{grid-template-columns:1fr;gap:1rem}
+  .unitnav a{font-size:.86rem;padding:.5rem .55rem;align-items:center}
+  .unitnav{gap:.3rem}
+}
+@media (max-width:1024px){
+  .unitnav a .lbl{display:none}
+  .unitnav a{font-size:.92rem;padding:.5rem .7rem}
+}
+@media (max-width:600px){
+  body{font-size:16px;line-height:1.6}
+  /* header becomes two rows: brand + theme, then a scrollable unit rail */
+  .head-in{flex-wrap:wrap;gap:.3rem .7rem;padding:.55rem .9rem .4rem}
+  .brand{margin-right:auto}
+  .brand-txt span{display:none}
+  .theme-btn{margin-left:0;width:40px;height:40px}
+  .unitnav{
+    order:3;flex:1 0 100%;margin-left:0;gap:.1rem;
+    padding:.3rem 0 .1rem;border-top:1px solid var(--line);
+    -webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;
+    scroll-snap-type:x proximity;
+  }
+  .unitnav a{flex:0 0 auto;justify-content:center;min-height:40px;padding:.4rem .85rem;scroll-snap-align:center}
+  .unitnav a .un{font-size:.8rem}
+  html{scroll-padding-top:96px}
+  .unit{scroll-margin-top:96px}
+  h3.sec{scroll-margin-top:104px}
+  .wrap{padding:0 .9rem}
+  .hero{padding:1.8rem 0 1.6rem}
+  .hero h1{font-size:2.45rem}
+  .hero .grade{font-size:.86rem;margin-bottom:1rem}
+  .hero p.lede{font-size:.96rem;margin-bottom:1.2rem}
+  .unit{padding-top:2.2rem}
+  .unit-head{margin-bottom:1.7rem}
+  .unit-head h2{font-size:1.9rem}
+  .unit-head .standfirst{font-size:.95rem}
+  .learn{padding:.8rem .85rem}
+  .legend{gap:.55rem 1rem;font-size:.74rem;margin-top:1.6rem;padding:.8rem 0}
+  h3.sec{font-size:1.2rem;gap:.45rem;margin-top:2rem}
+  .callout,.breath,.tool{padding:.85rem .9rem}
+  .tablewrap{-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+  table{min-width:460px;font-size:.82rem}
+  th,td{padding:.5rem .65rem}
+  thead th{font-size:.68rem}
+  caption{padding:.5rem .65rem 0}
+  /* diagrams keep their real scale and scroll sideways instead of shrinking to mush */
+  .fig{padding:.55rem;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+  .fig svg{min-width:480px}
+  .fig.fig-fluid svg{min-width:0}
+  .fig figcaption{font-size:.72rem}
+  .bits{gap:3px}
+  .bits .b{font-size:.95rem;padding:.35rem 0}
+  .bits .w{font-size:.55rem}
+  pre{font-size:.74rem;padding:.75rem}
+  details .ans{padding:0 .9rem .8rem 1.4rem}
+  summary{padding:.7rem .8rem}
+  .top{width:44px;height:44px;right:.9rem;bottom:.9rem}
+  .end{padding:2rem 0 3rem}
+}
+@media (max-width:400px){
+  .hero h1{font-size:2.15rem}
+  .unit-head h2{font-size:1.7rem}
+  .brand-txt b{font-size:.95rem}
+  .chip{font-size:.66rem}
+  .unitnav a{padding:.4rem .7rem}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important}
+}
+@media print{
+  .site-head,.top,.progress,.theme-btn{display:none}
+  body{background:#fff;font-size:11pt}
+  body::before{display:none}
+  .unit{break-inside:avoid-page}
+  details .ans{display:block}
+  .fig,pre,.callout,.tablewrap{break-inside:avoid}
+  .bs-controls{display:none}
+  .fig-note{background:none;border-left-width:1px}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="bar" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="head-in">
+    <a class="brand" href="#top">
+      <svg class="logo" viewBox="0 0 44 44" role="img" aria-label="Computer Science X">
+        <rect x="0.8" y="0.8" width="42.4" height="42.4" rx="3" fill="var(--emerald)" stroke="var(--ink)" stroke-width="1.4"/>
+        <rect x="4.4" y="4.4" width="35.2" height="35.2" rx="1" fill="none" stroke="#FCFDF9" stroke-opacity=".35" stroke-width=".9"/>
+        <text x="22" y="30.4" text-anchor="middle" font-family="Palatino Linotype,Book Antiqua,Georgia,serif" font-size="19" font-weight="700" fill="#FCFDF9">10</text>
+      </svg>
+      <span class="brand-txt"><b>Computer Science</b><span>NBF · Units 1–6</span></span>
+    </a>
+    <nav class="unitnav" aria-label="Jump to unit">
+      <a href="#unit1"><span class="un">01</span><span class="lbl">Systems</span></a>
+      <a href="#unit2"><span class="un">02</span><span class="lbl">Algorithms</span></a>
+      <a href="#unit3"><span class="un">03</span><span class="lbl">Programming</span></a>
+      <a href="#unit4"><span class="un">04</span><span class="lbl">Data</span></a>
+      <a href="#unit5"><span class="un">05</span><span class="lbl">Applications</span></a>
+      <a href="#unit6"><span class="un">06</span><span class="lbl">Impacts</span></a>
+      <a href="#revision" aria-label="Jump to the revision page"><span class="un">★</span><span class="lbl">Revise</span></a>
+    </nav>
+    <button class="theme-btn" id="theme" type="button" aria-label="Switch colour theme">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8Z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div>
+      <p class="kicker">National Book Foundation · Federal Textbook Board</p>
+      <h1>Computer<br>Science <em>X</em></h1>
+      <span class="grade">Grade 10 · Notes for Units 1–6</span>
+      <p class="lede">
+        Every idea in the textbook, boiled down to what an exam actually asks:
+        the definitions, the one worked example that matters, and a picture in your head
+        for the rest.
+      </p>
+      <div class="hero-meta">
+        <span class="chip"><strong>6</strong> units</span>
+        <span class="chip"><strong>60+</strong> topics condensed</span>
+        <span class="chip"><strong>1</strong> revision page</span>
+      </div>
+    </div>
+
+    <nav aria-label="Unit map">
+      <ol class="path">
+        <li><a href="#unit1"><span class="dot">01</span><span><b>Computer Systems</b><small>Bits, number bases, the OS, software</small></span></a></li>
+        <li><a href="#unit2"><span class="dot">02</span><span><b>Computational Thinking</b><small>Counting, algorithms, abstraction</small></span></a></li>
+        <li><a href="#unit3"><span class="dot">03</span><span><b>Programming Fundamentals</b><small>HTML forms, CSS motion, JavaScript</small></span></a></li>
+        <li><a href="#unit4"><span class="dot">04</span><span><b>Data and Analysis</b><small>AI, machine learning, visualisation</small></span></a></li>
+        <li><a href="#unit5"><span class="dot">05</span><span><b>Applications</b><small>IoT, blockchain, cloud, NLP, robotics</small></span></a></li>
+        <li><a href="#unit6"><span class="dot">06</span><span><b>Impacts of Computing</b><small>Addiction, security, digital divide</small></span></a></li>
+      </ol>
+    </nav>
+  </section>
+
+  <div class="legend">
+    <span><i style="background:var(--amber)"></i>Analogy — the idea in plain words</span>
+    <span><i style="background:var(--oxblood)"></i>Exam tip — what markers look for</span>
+    <span><i style="background:var(--blue)"></i>Code — the book's program, trimmed</span>
+    <span><i style="background:var(--emerald)"></i>Key idea — memorise this line</span>
+  </div>
+
+  <!-- ============ UNIT 1 ============ -->
+  <section class="unit" id="unit1">
+    <header class="unit-head">
+      <span class="unit-no">Unit 01</span>
+      <h2>Computer Systems</h2>
+      <p class="standfirst">
+        A computer stores everything as bits, speaks in four number bases, and hands the whole
+        machine over to an operating system before you can open a single app.
+      </p>
+      <div class="unit-grid">
+        <ul class="learn">
+          <li>Represent numbers in binary, octal and hexadecimal — and convert between them</li>
+          <li>Do binary arithmetic, and explain overflow, underflow and complements</li>
+          <li>Distinguish ASCII from Unicode</li>
+          <li>Describe what an OS manages, and the main types of OS</li>
+          <li>Sort software into system, application, programming and driver</li>
+        </ul>
+        <div class="keyterms">
+          <span class="chip">bit</span><span class="chip">base-2</span><span class="chip">MSB</span>
+          <span class="chip">two's complement</span><span class="chip">overflow</span>
+          <span class="chip">ASCII</span><span class="chip">Unicode</span><span class="chip">scheduler</span>
+          <span class="chip">process</span><span class="chip">deadlock</span><span class="chip">IDE</span>
+          <span class="chip">hosting</span>
+        </div>
+      </div>
+    </header>
+
+    <h3 class="sec" id="s1-1"><span class="n">1.1</span> Machine-level representation of data</h3>
+    <p>
+      Inside the machine there is no "5", no "A", no photo. There are only bits — switches that are
+      either <strong>0</strong> or <strong>1</strong>. A <span class="term">bit</span> is the smallest
+      unit of information; eight of them make a <span class="term">byte</span>. Everything else is a
+      convention for reading a pattern of bits: the same 8 bits can be a number, a character or one
+      channel of a colour.
+    </p>
+    <p>How the same bit pattern gets read depends on its <span class="term">data type</span>:</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Type</th><th>What it stores</th><th>How it is held</th></tr></thead>
+        <tbody>
+          <tr><td>Integer</td><td>whole numbers</td><td>fixed number of bits; leftmost bit is the sign</td></tr>
+          <tr><td>Floating point</td><td>real numbers with fractions</td><td>IEEE&nbsp;754: sign + exponent + mantissa</td></tr>
+          <tr><td>Character</td><td>letters, digits, symbols</td><td>a code number (ASCII / Unicode)</td></tr>
+          <tr><td>Boolean</td><td>true or false</td><td>one bit: 1 or 0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      An <strong>8-bit signed</strong> integer runs from −128 to +127; unsigned, the same 8 bits run
+      from 0 to 255. That is not a detail — it is the reason calculators wrap around to a wrong answer.
+    </p>
+    <aside class="callout">
+      <span class="tag">ANALOGY</span>
+      <p>A bit is a light switch. One switch tells you almost nothing; eight switches in a row can
+      spell out 256 different on/off combinations — like a row of eight switches in a shop window,
+      where every pattern means a different product.</p>
+    </aside>
+
+    <h3 class="sec" id="s1-2"><span class="n">1.2</span> Number systems</h3>
+    <p>
+      A <span class="term">number system</span> is just a set of symbols plus a rule for what each
+      position is worth. It is <em>positional</em>: in 964, the 9 means nine hundreds only because of
+      where it sits.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>System</th><th>Base</th><th>Digits allowed</th><th>Where you meet it</th></tr></thead>
+        <tbody>
+          <tr><td>Decimal</td><td class="num">10</td><td>0–9</td><td>everyday counting</td></tr>
+          <tr><td>Binary</td><td class="num">2</td><td>0, 1</td><td>the hardware itself</td></tr>
+          <tr><td>Octal</td><td class="num">8</td><td>0–7</td><td>short-hand for binary (3 bits per digit)</td></tr>
+          <tr><td>Hexadecimal</td><td class="num">16</td><td>0–9, A–F</td><td>colour codes, memory addresses, short-hand (4 bits per digit)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Each position is worth <em>base</em><sup>position</sup>, counting from 0 at the right.
+      So <span class="mono">1011.101₂</span> = 8 + 0 + 2 + 1 + ½ + 0 + ⅛ = <strong>11.625</strong>.
+      <em>That single line is the whole "any base → decimal" method.</em>
+    </p>
+
+    <figure class="fig">
+      <div class="bits" aria-hidden="true">
+        <div><div class="w">128</div><div class="b one">1</div></div>
+        <div><div class="w">64</div><div class="b">0</div></div>
+        <div><div class="w">32</div><div class="b one">1</div></div>
+        <div><div class="w">16</div><div class="b one">1</div></div>
+        <div><div class="w">8</div><div class="b">0</div></div>
+        <div><div class="w">4</div><div class="b">0</div></div>
+        <div><div class="w">2</div><div class="b one">1</div></div>
+        <div><div class="w">1</div><div class="b one">1</div></div>
+      </div>
+      <figcaption><span class="cap-n">Fig 1.1</span> 179 = 128 + 32 + 16 + 2 + 1 = <strong>10110011₂</strong>. The leftmost 1 is the MSB, the rightmost is the LSB.</figcaption>
+    </figure>
+
+    <h4>Converting: pick the direction</h4>
+    <ul class="plain">
+      <li><strong>Any base → decimal:</strong> multiply each digit by its place value and add.</li>
+      <li><strong>Decimal → any base:</strong> divide by the base and collect remainders, bottom to top.</li>
+      <li><strong>Octal ↔ binary:</strong> swap each octal digit for 3 bits. <strong>Hex ↔ binary:</strong> 4 bits.</li>
+      <li><strong>Octal ↔ hex:</strong> go through binary or decimal — no direct shortcut.</li>
+    </ul>
+    <aside class="callout code">
+      <span class="tag">WORKED EXAMPLE · the only one you need</span>
+      <p><strong>(1BE8)₁₆ → decimal</strong><br>
+      1×16³ + 11×16² + 14×16¹ + 8×16⁰ = 4096 + 2816 + 224 + 8 = <strong>7144</strong>.<br>
+      Check the reverse: 179 ÷ 2 leaves remainders 1 1 0 0 1 1 0 1, read upwards → <strong>10110011</strong>.</p>
+    </aside>
+
+    <div class="tool">
+      <h4>Try it: decimal → binary</h4>
+      <p class="hint">Type a whole number from 0 to 255 and watch the eight switches.</p>
+      <div class="tool-row">
+        <input id="decInput" type="number" min="0" max="255" value="179" inputmode="numeric" aria-label="Decimal number from 0 to 255">
+        <span class="out" id="binOut" aria-live="polite">10110011</span>
+      </div>
+      <p class="note" id="binNote">Nothing is stored — the page recomputes as you type.</p>
+    </div>
+
+    <h3 class="sec" id="s1-3"><span class="n">1.2.3</span> Binary arithmetic, overflow and complements</h3>
+    <p>
+      Addition works exactly as in decimal, with four facts: 0+0=0, 0+1=1, 1+0=1, and 1+1=10
+      (write 0, carry 1). Subtraction borrows in the same way.
+    </p>
+    <p>
+      <span class="term">Overflow</span> is when the answer needs more bits than the register has:
+      255 + 1 in 8 bits gives 100000000₂, and the ninth bit is lost, so the register shows 0.
+      <span class="term">Underflow</span> is the mirror problem for values too small to represent.
+      The fixes are bigger data types, range checks, or library support.
+    </p>
+    <p>
+      Computers avoid a separate subtraction circuit by using <strong>complements</strong>.
+      The 1's complement flips every bit; the 2's complement flips then adds 1.
+      So −13 in 8 bits is <span class="mono">00001101</span> → flip → <span class="mono">11110010</span>
+      → +1 → <strong>11110011</strong>. The sign bit (leftmost) being 1 is what marks a negative number.
+    </p>
+    <aside class="callout tip">
+      <span class="tag">EXAM TIP</span>
+      <p>Marks are lost for skipping the sign bit. Write "8-bit two's complement" and show the flip-then-add-one
+      step in two lines — examiners award the method even if the final bit is wrong.</p>
+    </aside>
+
+    <h3 class="sec" id="s1-4"><span class="n">1.3</span> Coding schemes: ASCII and Unicode</h3>
+    <p>
+      A coding scheme is an agreed dictionary between characters and numbers, so that two different
+      machines read the same bytes the same way.
+    </p>
+    <ul class="plain">
+      <li><strong>ASCII</strong> (1963) used 7 bits → 2⁷ = 128 characters. <strong>Extended ASCII</strong> used 8 bits → 256. Enough for English, not for the world.</li>
+      <li><strong>Unicode</strong> (1991) gives every character in every script a unique number — over 100,000 today, including emoji. Its storage formats are UTF-8, UTF-16 and UTF-32.</li>
+    </ul>
+    <aside class="callout">
+      <span class="tag">ANALOGY</span>
+      <p>ASCII is a 128-seat cinema — fine for one neighbourhood. Unicode is a global stadium where
+      every language gets a seat, and UTF-8 is the ticket system that squeezes common Latin letters
+      into one byte but lets rare characters take more room.</p>
+    </aside>
+    <p class="mono" style="font-size:.8rem;background:var(--surface-2);padding:.6rem .8rem;border-radius:2px">
+      'A' = 65 &nbsp;·&nbsp; 'a' = 97 &nbsp;·&nbsp; '0' = 48 &nbsp;·&nbsp; 'A' in 8-bit binary = 01000001
+    </p>
+
+    <h3 class="sec" id="s1-5"><span class="n">1.4</span> The operating system</h3>
+    <p>
+      The <span class="term">operating system</span> is the software loaded into RAM at start-up that
+      stands between you and the hardware. Windows, macOS, Linux, Android and iOS are the familiar ones.
+      It performs six jobs: <strong>process, memory, file, device, network</strong> and
+      <strong>security</strong> management.
+    </p>
+
+    <figure class="fig">
+      <svg viewBox="0 0 520 210" role="group" aria-label="Layered diagram of a computer. Each layer can be selected.">
+        <g class="layer" tabindex="0" role="button" aria-label="User layer" data-note="&lt;b&gt;User&lt;/b&gt; — people, not hardware. They click, type and speak, and expect a result back in human terms: a photo, a message, a mark.">
+          <rect x="10" y="10" width="500" height="32" fill="var(--surface-2)" stroke="var(--line-strong)"/>
+          <text x="26" y="31" fill="var(--ink-soft)">USER</text>
+          <text x="470" y="31" fill="var(--ink-faint)" text-anchor="end">clicks, types, speaks</text>
+        </g>
+
+        <g class="layer" tabindex="0" role="button" aria-label="Applications layer" data-note="&lt;b&gt;Applications&lt;/b&gt; — browsers, word processors, games. They solve your problem and ask the operating system for everything else: memory, a file, the network.">
+          <rect x="10" y="54" width="500" height="38" fill="var(--blue-soft)" stroke="var(--blue)"/>
+          <text x="26" y="78" fill="var(--blue)">APPLICATIONS</text>
+          <text x="470" y="78" fill="var(--ink-soft)" text-anchor="end">browser · word processor · games</text>
+        </g>
+
+        <g class="layer" tabindex="0" role="button" aria-label="Operating system layer" data-note="&lt;b&gt;Operating system&lt;/b&gt; — the manager. The scheduler shares the CPU, the memory manager allocates RAM, the file system turns blocks into files, drivers talk to devices, and security checks who may do what.">
+          <rect x="10" y="104" width="500" height="56" fill="var(--emerald-soft)" stroke="var(--emerald)"/>
+          <text x="26" y="125" fill="var(--emerald)">OPERATING SYSTEM</text>
+          <text x="26" y="145" fill="var(--ink-soft)">scheduler · memory manager · file system · device drivers · security</text>
+        </g>
+
+        <g class="layer" tabindex="0" role="button" aria-label="Hardware layer" data-note="&lt;b&gt;Hardware&lt;/b&gt; — CPU, RAM, disk, I/O. It understands only instructions and voltages, and has no idea what a “document” or a “photo” is. Meaning lives in software.">
+          <rect x="10" y="172" width="500" height="30" fill="var(--surface-2)" stroke="var(--line-strong)"/>
+          <text x="26" y="192" fill="var(--ink-soft)">HARDWARE</text>
+          <text x="470" y="192" fill="var(--ink-faint)" text-anchor="end">CPU · RAM · disk · I/O</text>
+        </g>
+
+        <line x1="260" y1="176" x2="260" y2="92" stroke="var(--amber)" stroke-dasharray="3 3"/>
+        <text x="268" y="170" fill="var(--amber)">the app never touches the hardware directly</text>
+      </svg>
+      <p class="fig-note" aria-live="polite">Tap a layer to read what it does — and swipe the diagram sideways on a phone to see every label.</p>
+      <figcaption><span class="cap-n">Fig 1.2</span> The OS as a layer of abstraction: apps ask for "a file", not for a disk sector.<span class="cap-tag">interactive</span></figcaption>
+    </figure>
+
+    <h4>Processes and threads</h4>
+    <p>
+      A <span class="term">program</span> is a file sitting on disk. Once it is loaded into RAM and
+      running, it is a <span class="term">process</span> — the basic unit of work, with five states:
+      <strong>new → ready → running → waiting/blocked → terminated</strong>.
+      A <span class="term">thread</span> is a sequence of instructions inside a process. Threads share
+      memory; processes do not.
+    </p>
+    <p>
+      The <span class="term">scheduler</span> decides whose turn the CPU is. An <span class="term">interrupt</span>
+      is a signal that jumps the queue (an incoming email, a key press). A <span class="term">deadlock</span>
+      is when two processes each hold what the other needs and both wait forever.
+    </p>
+    <aside class="callout">
+      <span class="tag">ANALOGY</span>
+      <p>Processes are separate flats with their own keys. Threads are flatmates sharing one kitchen —
+      faster to work together, but one leaving a mess affects everybody. A deadlock is two people each
+      holding the other's door key.</p>
+    </aside>
+
+    <h4>Types of OS — learn the one-line difference</h4>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Type</th><th>What makes it different</th><th>Seen in</th></tr></thead>
+        <tbody>
+          <tr><td>Batch</td><td>jobs of the same kind grouped and run one after another</td><td>payroll, bank statements</td></tr>
+          <tr><td>Multiprogramming</td><td>several programs in memory; CPU switches when one waits for I/O</td><td>keeps CPU busy</td></tr>
+          <tr><td>Multitasking</td><td>rapid switching between tasks on one CPU</td><td>PCs, phones</td></tr>
+          <tr><td>Time-sharing</td><td>CPU split into time slices across many users</td><td>banks, universities</td></tr>
+          <tr><td>Real-time (RTOS)</td><td>answers within a deadline, or it fails</td><td>medical devices, traffic control</td></tr>
+          <tr><td>Multiprocessor</td><td>several CPUs under one system</td><td>servers, data centres</td></tr>
+          <tr><td>Distributed</td><td>tasks spread across networked computers; user cannot tell which</td><td>cloud</td></tr>
+          <tr><td>Embedded</td><td>built into one device, fixed task, tiny resources</td><td>microwave, camera</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      File systems organise storage into files, folders and metadata. Single-level is one flat folder;
+      two-level gives each user a folder; tree is the normal hierarchy. Files are allocated
+      <strong>contiguously</strong> (fast, fragments), <strong>linked</strong> (flexible, slower) or
+      <strong>indexed</strong> (a pointer table). FAT is old and simple, NTFS adds security and large
+      files, ext4 is the Linux workhorse with journaling.
+    </p>
+
+    <h3 class="sec" id="s1-6"><span class="n">1.5</span> Computer software</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Kind</th><th>Job</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td>System software</td><td>runs the machine and hosts everything else</td><td>Windows, macOS, Linux, Android</td></tr>
+          <tr><td>Application software</td><td>does a task for the user</td><td>Word, Chrome, Spotify</td></tr>
+          <tr><td>Programming software</td><td>write, test and translate code</td><td>VS Code, Eclipse, GCC</td></tr>
+          <tr><td>Driver software</td><td>translates between OS and a device</td><td>printer, Wi-Fi, GPU drivers</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      An <strong>offline application</strong> runs from local resources (Word, Photoshop, VLC);
+      an <strong>online application</strong> needs a server (Google Docs, Gmail, Spotify streaming).
+      A <span class="term">patch</span> is a small update that fixes bugs, closes a security hole,
+      improves speed or adds a feature.
+    </p>
+    <h4>Where software lives</h4>
+    <h4>The programmer's tools</h4>
+    <p>
+      <span class="term">Programming software</span> is the workshop: a <strong>text editor</strong> writes
+      code (Notepad++, Sublime Text, VS Code); an <strong>IDE</strong> bundles the editor, debugger and
+      compiler in one window (Eclipse, IntelliJ, Visual Studio); a <strong>compiler</strong> translates the
+      high-level code into machine code (GCC for C/C++, javac for Java). Modern editors add syntax
+      highlighting, code completion and real-time error checking, which is why they catch typos before the
+      program ever runs.
+    </p>
+    <p>
+      <strong>On-premises</strong> hosting means your own server room: full control, high cost.
+      <strong>Shared</strong> hosting puts many sites on one server: cheap but noisy neighbours.
+      <strong>Dedicated</strong> hosting gives you the whole machine: fast and secure, expensive.
+      <strong>Cloud</strong> hosting rents scalable capacity by the minute — as much or as little as you need.
+    </p>
+    <aside class="callout tip">
+      <span class="tag">EXAM TIP</span>
+      <p>For hosting questions, the mark scheme usually wants <em>two pros and two cons</em>. Pair them:
+      control vs cost, scalability vs dependence on the internet.</p>
+    </aside>
+
+    <div class="qa">
+      <p class="lbl">QUICK CHECK</p>
+      <details>
+        <summary>Why is hexadecimal used when the computer only understands binary?</summary>
+        <div class="ans"><p>Because one hex digit maps exactly onto four bits, so a long binary string becomes short and human-readable without any conversion maths. <span class="mono">1111 1010 0011</span> is simply <span class="mono">FA3</span>.</p></div>
+      </details>
+      <details>
+        <summary>State the difference between multiprogramming and multitasking.</summary>
+        <div class="ans"><p>Multiprogramming keeps several programs in memory and switches when one is waiting for I/O, to keep the CPU busy. Multitasking switches rapidly between tasks so the user appears to run them all at once.</p></div>
+      </details>
+      <details>
+        <summary>What happens when an 8-bit unsigned register holding 255 is incremented?</summary>
+        <div class="ans"><p>Overflow. The true result is 256 (100000000₂) but only 8 bits fit, so the carry is lost and the register reads 00000000.</p></div>
+      </details>
+    </div>
+
+    <div class="breath">
+      <h4>UNIT 1 IN ONE BREATH</h4>
+      <p>Bits are the only real data; every base is a different way of reading the same bits, and place value does all the work. The OS turns that hardware into a usable machine by managing processes, memory, files, devices, networks and security — and software is simply everything that runs on top of it.</p>
+    </div>
+  </section>
+
+  <!-- ============ UNIT 2 ============ -->
+  <section class="unit" id="unit2">
+    <header class="unit-head">
+      <span class="unit-no">Unit 02</span>
+      <h2>Computational Thinking &amp; Algorithms</h2>
+      <p class="standfirst">
+        Before code there is a plan. Computational thinking breaks a messy problem into pieces small
+        enough to solve, and an algorithm is the written recipe that survives being handed to a machine.
+      </p>
+      <div class="unit-grid">
+        <ul class="learn">
+          <li>Classify problems as decision, search or counting</li>
+          <li>Apply the counting principles, including permutation and combination</li>
+          <li>State the six properties of a correct algorithm</li>
+          <li>Compare standard sorting and searching algorithms</li>
+          <li>Dry-run an algorithm with a trace table and find syntax vs logical errors</li>
+        </ul>
+        <div class="keyterms">
+          <span class="chip">decomposition</span><span class="chip">abstraction</span>
+          <span class="chip">permutation</span><span class="chip">combination</span>
+          <span class="chip">pigeonhole</span><span class="chip">inclusion–exclusion</span>
+          <span class="chip">bubble sort</span><span class="chip">binary search</span>
+          <span class="chip">modularity</span><span class="chip">trace table</span>
+        </div>
+      </div>
+    </header>
+
+    <h3 class="sec" id="s2-1"><span class="n">2.1</span> Computing problems</h3>
+    <p>
+      A <span class="term">computing problem</span> is one you solve in steps using computation:
+      it takes a well-defined input and must produce an output with certain properties. Three
+      families cover most textbook questions:
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Family</th><th>The answer is…</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Decision</td><td>yes or no</td><td>“Is 97 prime?”</td></tr>
+          <tr><td>Search</td><td>a set of values meeting a condition</td><td>“Find a route from Islamabad to Lahore.”</td></tr>
+          <tr><td>Counting</td><td>how many solutions exist</td><td>“How many routes are there?”</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sec" id="s2-2"><span class="n">2.2–2.3</span> Counting principles</h3>
+    <p>
+      Counting problems are easiest to see as a <strong>tree</strong>: every option becomes a branch,
+      and each complete path from root to leaf is one possible outcome.
+    </p>
+    <figure class="fig">
+      <svg viewBox="0 0 520 190" role="img" aria-label="Tree of choices: three shirts and four trousers give twelve outfits">
+        <circle cx="45" cy="95" r="4" fill="var(--emerald)"/>
+        <text x="58" y="99" fill="var(--ink-soft)">start</text>
+        <g stroke="var(--line-strong)" fill="none">
+          <path d="M49 95 C110 95 120 40 170 40"/>
+          <path d="M49 95 C110 95 120 95 170 95"/>
+          <path d="M49 95 C110 95 120 150 170 150"/>
+        </g>
+        <g fill="var(--blue)"><circle cx="175" cy="40" r="4"/><circle cx="175" cy="95" r="4"/><circle cx="175" cy="150" r="4"/></g>
+        <text x="188" y="36" fill="var(--ink-soft)">shirt 1</text>
+        <text x="188" y="91" fill="var(--ink-soft)">shirt 2</text>
+        <text x="188" y="146" fill="var(--ink-soft)">shirt 3</text>
+        <g stroke="var(--line)" fill="none">
+          <path d="M179 40 H300"/><path d="M179 40 C240 40 240 12 300 12"/><path d="M179 40 C240 40 240 68 300 68"/>
+          <path d="M179 95 C240 95 240 78 300 78"/><path d="M179 95 C240 95 240 114 300 114"/>
+          <path d="M179 150 C240 150 240 122 300 122"/><path d="M179 150 C240 150 240 178 300 178"/>
+        </g>
+        <g fill="var(--amber)">
+          <circle cx="305" cy="12" r="3"/><circle cx="305" cy="40" r="3"/><circle cx="305" cy="68" r="3"/>
+          <circle cx="305" cy="78" r="3"/><circle cx="305" cy="95" r="3"/><circle cx="305" cy="114" r="3"/>
+          <circle cx="305" cy="122" r="3"/><circle cx="305" cy="150" r="3"/><circle cx="305" cy="178" r="3"/>
+        </g>
+        <text x="320" y="45" fill="var(--ink-soft)">each leaf = one outfit</text>
+        <text x="320" y="63" fill="var(--ink-faint)">3 shirts × 4 trousers</text>
+        <text x="320" y="81" fill="var(--ink-faint)">= 12 different outfits</text>
+        <text x="320" y="110" fill="var(--ink-faint)">add a third choice and</text>
+        <text x="320" y="128" fill="var(--ink-faint)">the branches multiply again</text>
+      </svg>
+      <figcaption><span class="cap-n">Fig 2.1</span> Multiplication in one picture: three first choices, each with four continuations.</figcaption>
+    </figure>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Principle</th><th>Use it when…</th><th>Formula / example</th></tr></thead>
+        <tbody>
+          <tr><td>Addition</td><td>you choose <em>one</em> of several mutually exclusive options</td><td>3 desktops + 4 laptops = <strong>7</strong> computers</td></tr>
+          <tr><td>Multiplication</td><td>you choose one option from <em>each</em> of several stages</td><td>3 apples × 3 bananas × 3 cherries = <strong>27</strong> baskets</td></tr>
+          <tr><td>Permutation</td><td>order matters</td><td>4 paintings, 3 wall spaces: 4×3×2 = <strong>24</strong></td></tr>
+          <tr><td>Combination</td><td>order does not matter</td><td>24 ÷ 3! = <strong>4</strong> groups</td></tr>
+          <tr><td>Pigeonhole</td><td>more items than containers</td><td>13 apples, 12 baskets → one basket holds 2</td></tr>
+          <tr><td>Inclusion–exclusion</td><td>the two sets overlap</td><td>|A∪B| = |A| + |B| − |A∩B|</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <aside class="callout key">
+      <span class="tag">KEY IDEA</span>
+      <p>Ask one question first: <strong>does the order matter?</strong> If yes → permutation; if no → combination.
+      Then check whether the sets overlap before you add.</p>
+    </aside>
+    <aside class="callout code">
+      <span class="tag">WORKED EXAMPLE</span>
+      <p>Eight-bit strings that <em>end in 00</em> <strong>or</strong> <em>start with 1</em>:<br>
+      end in 00 → 2⁶ = 64 &nbsp;·&nbsp; start with 1 → 2⁷ = 128 &nbsp;·&nbsp; both → 2⁵ = 32<br>
+      64 + 128 − 32 = <strong>160</strong>. Subtracting the overlap is the whole trick.</p>
+    </aside>
+
+    <h3 class="sec" id="s2-3"><span class="n">2.4</span> Algorithms and their properties</h3>
+    <p>
+      An <span class="term">algorithm</span> is a well-defined, finite sequence of rules for solving a
+      problem. It can be written as pseudocode, a flowchart, a program or plain language.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Property</th><th>Meaning in one line</th></tr></thead>
+        <tbody>
+          <tr><td>Input</td><td>zero or more values supplied from outside</td></tr>
+          <tr><td>Output</td><td>at least one result</td></tr>
+          <tr><td>Definiteness</td><td>every step is clear and unambiguous</td></tr>
+          <tr><td>Finiteness</td><td>it ends after a finite number of steps</td></tr>
+          <tr><td>Effectiveness</td><td>each step is simple enough to do with paper and pencil</td></tr>
+          <tr><td>Generality</td><td>it solves a whole class of problems, not one case</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Logical reasoning is the engine behind this. <span class="term">Boolean logic</span> reduces any
+      statement to true (1) or false (0), and combines them with AND, OR and NOT — the same operators
+      that later become <span class="mono">&amp;&amp;</span>, <span class="mono">||</span> and
+      <span class="mono">!</span> in code.
+    </p>
+
+    <h3 class="sec" id="s2-4"><span class="n">2.6</span> Standard algorithms</h3>
+    <p>
+      <strong>Sorting</strong> puts data in order; <strong>searching</strong> finds one item. Learn the
+      trade-off, not the code: bubble sort is easy but slow, binary search is fast but needs sorted data.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Algorithm</th><th>Idea</th><th>Watch out for</th></tr></thead>
+        <tbody>
+          <tr><td>Bubble sort</td><td>swap neighbouring items until none are out of order</td><td>many passes on large lists</td></tr>
+          <tr><td>Selection sort</td><td>repeatedly pick the smallest and move it to the sorted end</td><td>always scans the whole rest</td></tr>
+          <tr><td>Insertion sort</td><td>slot each new item into its place, like sorting cards in your hand</td><td>slow on reversed data</td></tr>
+          <tr><td>Merge sort</td><td>split in half, sort each half, merge</td><td>needs extra memory</td></tr>
+          <tr><td>Linear search</td><td>check items one by one</td><td>works on unsorted data, but slow</td></tr>
+          <tr><td>Binary search</td><td>halve the sorted range each time</td><td>useless if the list is not sorted</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <figure class="fig fig-fluid">
+      <div class="bs-stage" id="bsStage"></div>
+      <div class="bs-controls">
+        <button class="btn" id="bsNext" type="button">Next step</button>
+        <button class="btn ghost" id="bsReset" type="button">Reset</button>
+        <span class="bs-meta" id="bsMeta">target 38 · 10 items</span>
+      </div>
+      <p class="bs-status" id="bsStatus" aria-live="polite">Press “Next step” to compare the middle value with 38.</p>
+      <figcaption><span class="cap-n">Fig 2.2</span> Binary search halves the search space each step: 10 → 5 → 2 → found.<span class="cap-tag">interactive</span></figcaption>
+    </figure>
+
+    <h3 class="sec" id="s2-5"><span class="n">2.7</span> The four pillars of computational thinking</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Pillar</th><th>What you do</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Decomposition</td><td>break the big problem into smaller ones</td><td>a school app → login, timetable, results</td></tr>
+          <tr><td>Pattern recognition</td><td>spot what repeats</td><td>every report needs a title, table, total</td></tr>
+          <tr><td>Abstraction</td><td>keep what matters, drop the rest</td><td>a metro map keeps stations, ignores streets</td></tr>
+          <tr><td>Algorithm design</td><td>write the steps</td><td>the recipe for adding a student</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <aside class="callout">
+      <span class="tag">ANALOGY</span>
+      <p>Making tea is a perfect 7-step algorithm: boil water, add the bag, pour, wait, remove, add sugar and
+      milk (optional), stir. Anyone can follow it and get the same cup — that is what “definite” and
+      “general” mean.</p>
+    </aside>
+
+    <h3 class="sec" id="s2-6"><span class="n">2.9–2.11</span> Generalise, modularise, dry-run</h3>
+    <p>
+      A <strong>specific</strong> solution solves today's case; a <strong>general</strong> solution solves
+      the family of cases. Swap constants for variables, extract the common pattern, and test with
+      different inputs. <strong>Modular design</strong> then splits the system into interchangeable
+      modules with defined interfaces: define, design interfaces, implement, integrate, test — both
+      each module and the whole.
+    </p>
+    <p>
+      A <span class="term">dry run</span> executes the algorithm by hand on chosen inputs, recording every
+      variable in a <strong>trace table</strong>. It finds logic errors before a computer ever runs the code.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <caption>Dry run of “find the largest number” on [3, 1, 4, 1, 5, 9, 2, 6]</caption>
+        <thead><tr><th class="num">Step</th><th class="num">Current</th><th class="num">max before</th><th class="num">max after</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td class="num">0</td><td class="num">3</td><td class="num">3</td><td class="num">3</td><td>initialise with the first item</td></tr>
+          <tr><td class="num">2</td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td>4 &gt; 3, update</td></tr>
+          <tr><td class="num">5</td><td class="num">9</td><td class="num">5</td><td class="num">9</td><td>9 &gt; 5, update</td></tr>
+          <tr><td class="num">end</td><td class="num">—</td><td class="num">9</td><td class="num">9</td><td>answer = 9</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>Two kinds of error</h4>
+    <p>
+      A <strong>syntax error</strong> breaks the grammar — the program will not run at all (missing
+      bracket, misspelled keyword). A <strong>logical error</strong> runs fine and gives the wrong
+      answer, because the reasoning is wrong. A search query of “smartphones under 500” may return
+      used phones (logic) and wrong-currency results (syntax).
+    </p>
+    <aside class="callout tip">
+      <span class="tag">EXAM TIP</span>
+      <p>Trace-table questions give marks per row, not just the final answer. Draw the table with one
+      column per variable and one row per step, even when the question seems short.</p>
+    </aside>
+
+    <div class="qa">
+      <p class="lbl">QUICK CHECK</p>
+      <details>
+        <summary>A class of 50: 30 did maths, 25 did science, 15 did both. How many did at least one?</summary>
+        <div class="ans"><p>30 + 25 − 15 = <strong>40</strong>. The 15 are counted twice if you simply add, so include–exclude.</p></div>
+      </details>
+      <details>
+        <summary>Why can binary search not be used on an unsorted list?</summary>
+        <div class="ans"><p>It decides which half to discard by comparing with the middle value. Without order, the target could be in either half, so the decision is meaningless.</p></div>
+      </details>
+      <details>
+        <summary>Which algorithm property stops an infinite loop from being called an algorithm?</summary>
+        <div class="ans"><p>Finiteness — an algorithm must terminate after a finite number of steps.</p></div>
+      </details>
+    </div>
+
+    <div class="breath">
+      <h4>UNIT 2 IN ONE BREATH</h4>
+      <p>Decompose the problem, spot the pattern, strip it to the essential (abstraction), then write finite,
+      definite steps. Counting asks whether order matters; algorithms are judged by six properties; and a dry
+      run on paper is cheaper than a bug in code.</p>
+    </div>
+  </section>
+
+  <!-- ============ UNIT 3 ============ -->
+  <section class="unit" id="unit3">
+    <header class="unit-head">
+      <span class="unit-no">Unit 03</span>
+      <h2>Programming Fundamentals</h2>
+      <p class="standfirst">
+        A website is two halves talking to each other: the page you touch, and the server you never see.
+        This unit moves from forms and tables, through animation, to JavaScript that reacts.
+      </p>
+      <div class="unit-grid">
+        <ul class="learn">
+          <li>Separate front-end from back-end and explain the client–server exchange</li>
+          <li>Build forms, inputs and tables in HTML, and style them with CSS</li>
+          <li>Animate elements with <span class="mono">@keyframes</span></li>
+          <li>Use arrays, loops and functions in JavaScript to change the page</li>
+          <li>Write a unit test and debug with breakpoints and watchpoints</li>
+        </ul>
+        <div class="keyterms">
+          <span class="chip">client-side</span><span class="chip">server-side</span>
+          <span class="chip">&lt;input&gt;</span><span class="chip">border-collapse</span>
+          <span class="chip">@keyframes</span><span class="chip">array</span>
+          <span class="chip">DOM</span><span class="chip">ADT</span>
+          <span class="chip">unit test</span><span class="chip">breakpoint</span>
+        </div>
+      </div>
+    </header>
+
+    <h3 class="sec" id="s3-1"><span class="n">3.1</span> How a website is built</h3>
+    <p>
+      Website development runs in a loop: plan the purpose, design the navigation, build, test, launch.
+      The build splits into two halves, and the split is deliberate — each half can change without
+      breaking the other, and each needs a different skill set.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th></th><th>Front-end (client-side)</th><th>Back-end (server-side)</th></tr></thead>
+        <tbody>
+          <tr><td>What it is</td><td>everything you see and touch in the browser</td><td>data, logic and storage on the server</td></tr>
+          <tr><td>Languages</td><td>HTML, CSS, JavaScript</td><td>Python, PHP, Ruby, SQL</td></tr>
+          <tr><td>Goal</td><td>attractive, usable, responsive</td><td>correct, secure, fast answers</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <figure class="fig">
+      <svg viewBox="0 0 520 170" role="img" aria-label="Browser sends request to server, server queries the database and returns a response">
+        <rect x="10" y="30" width="150" height="90" rx="2" fill="var(--blue-soft)" stroke="var(--blue)"/>
+        <text x="85" y="55" text-anchor="middle" fill="var(--blue)" font-weight="700">BROWSER</text>
+        <text x="85" y="73" text-anchor="middle" fill="var(--ink-soft)">HTML · CSS · JS</text>
+        <text x="85" y="91" text-anchor="middle" fill="var(--ink-faint)">the page you see</text>
+        <text x="85" y="109" text-anchor="middle" fill="var(--ink-faint)">front-end</text>
+
+        <rect x="205" y="30" width="150" height="90" rx="2" fill="var(--emerald-soft)" stroke="var(--emerald)"/>
+        <text x="280" y="55" text-anchor="middle" fill="var(--emerald)" font-weight="700">SERVER</text>
+        <text x="280" y="73" text-anchor="middle" fill="var(--ink-soft)">Python · PHP · logic</text>
+        <text x="280" y="91" text-anchor="middle" fill="var(--ink-faint)">checks and decides</text>
+        <text x="280" y="109" text-anchor="middle" fill="var(--ink-faint)">back-end</text>
+
+        <path d="M400 45 v60 a20 20 0 0 1 -20 20 h-30" fill="none" stroke="var(--line-strong)"/>
+        <ellipse cx="440" cy="75" rx="42" ry="28" fill="var(--amber-soft)" stroke="var(--amber)"/>
+        <path d="M415 50 v50 M440 47 v56 M465 50 v50" stroke="var(--amber)"/>
+        <text x="440" y="80" text-anchor="middle" fill="var(--amber)">database</text>
+
+        <path d="M165 55 H200" stroke="var(--ink-soft)" marker-end="url(#ar)"/>
+        <text x="183" y="47" text-anchor="middle" fill="var(--ink-faint)">request</text>
+        <path d="M200 95 H165" stroke="var(--ink-soft)" marker-end="url(#ar2)"/>
+        <text x="183" y="112" text-anchor="middle" fill="var(--ink-faint)">response</text>
+        <defs>
+          <marker id="ar" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="var(--ink-soft)"/></marker>
+          <marker id="ar2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M6 0 L0 3 L6 6 z" fill="var(--ink-soft)"/></marker>
+        </defs>
+        <text x="10" y="150" fill="var(--ink-faint)">One order click = one request → one database update → one response.</text>
+      </svg>
+      <figcaption><span class="cap-n">Fig 3.1</span> In an online shop, the front-end collects the order; the back-end checks stock and updates the database.</figcaption>
+    </figure>
+    <p>
+      <span class="term">Responsive design</span> lets one site fit every screen: widths in percentages
+      rather than fixed pixels, and layouts that stack. A desktop menu becoming a stacked mobile menu is
+      the classic example.
+    </p>
+
+    <h3 class="sec" id="s3-2"><span class="n">3.2</span> Forms in HTML</h3>
+    <p>
+      A form is a paper form on screen. The <span class="mono">&lt;form&gt;</span> tag wraps it, each
+      <span class="mono">&lt;input&gt;</span> collects one field, and <span class="mono">&lt;label&gt;</span>
+      tells the user what to type. The <span class="mono">type</span> attribute decides which control appears.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>type</th><th>Gives you</th><th>Use for</th></tr></thead>
+        <tbody>
+          <tr><td class="num">text</td><td>single-line box</td><td>names</td></tr>
+          <tr><td class="num">email / tel</td><td>box with format checking</td><td>addresses, phone numbers</td></tr>
+          <tr><td class="num">date / time</td><td>picker</td><td>appointments</td></tr>
+          <tr><td class="num">radio</td><td>one choice only</td><td>gender, delivery method</td></tr>
+          <tr><td class="num">checkbox</td><td>any number of choices</td><td>sports, toppings</td></tr>
+          <tr><td class="num">submit / reset</td><td>buttons</td><td>send or clear the form</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Radio buttons that belong to one question must share a <span class="mono">name</span>; that shared
+      name is what makes them mutually exclusive. A drop-down is a
+      <span class="mono">&lt;select&gt;</span> containing <span class="mono">&lt;option&gt;</span>s.
+    </p>
+    <pre><span class="c">&lt;!-- one label, one control, one shared name per question --&gt;</span>
+<span class="t">&lt;form</span> action=<span class="s">"submit.html"</span> method=<span class="s">"post"</span><span class="t">&gt;</span>
+  <span class="t">&lt;label</span> for=<span class="s">"name"</span><span class="t">&gt;</span>Name:<span class="t">&lt;/label&gt;</span>
+  <span class="t">&lt;input</span> type=<span class="s">"text"</span> id=<span class="s">"name"</span> name=<span class="s">"name"</span> required<span class="t">&gt;</span>
+
+  <span class="t">&lt;input</span> type=<span class="s">"radio"</span> id=<span class="s">"male"</span> name=<span class="s">"gender"</span> value=<span class="s">"male"</span><span class="t">&gt;</span>
+  <span class="t">&lt;label</span> for=<span class="s">"male"</span><span class="t">&gt;</span>Male<span class="t">&lt;/label&gt;</span>
+  <span class="t">&lt;input</span> type=<span class="s">"radio"</span> id=<span class="s">"female"</span> name=<span class="s">"gender"</span> value=<span class="s">"female"</span><span class="t">&gt;</span>
+  <span class="t">&lt;label</span> for=<span class="s">"female"</span><span class="t">&gt;</span>Female<span class="t">&lt;/label&gt;</span>
+
+  <span class="t">&lt;input</span> type=<span class="s">"submit"</span> value=<span class="s">"Submit"</span><span class="t">&gt;</span>
+<span class="t">&lt;/form&gt;</span></pre>
+    <p>
+      The <span class="mono">action</span> says where the data goes; the <span class="mono">method</span>
+      says how (<span class="mono">post</span> hides it in the request body).
+      <span class="mono">required</span> refuses to submit an empty field.
+    </p>
+
+    <h3 class="sec" id="s3-3"><span class="n">3.2.2</span> Tables</h3>
+    <p>
+      Tables are for data that genuinely has rows and columns — not for page layout.
+      <span class="mono">&lt;table&gt;</span> wraps everything, <span class="mono">&lt;tr&gt;</span> is a row,
+      <span class="mono">&lt;th&gt;</span> a header cell, <span class="mono">&lt;td&gt;</span> a data cell, and
+      <span class="mono">&lt;caption&gt;</span> names the table.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>CSS property</th><th>Effect</th></tr></thead>
+        <tbody>
+          <tr><td class="num">border-collapse: collapse</td><td>joins neighbouring borders into one clean line</td></tr>
+          <tr><td class="num">padding</td><td>space between a cell's border and its text</td></tr>
+          <tr><td class="num">cellspacing</td><td>space between the borders of separate cells</td></tr>
+          <tr><td class="num">colspan / rowspan</td><td>make one cell span several columns or rows</td></tr>
+          <tr><td class="num">tr:nth-child(odd)</td><td>zebra-stripe alternate rows</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sec" id="s3-4"><span class="n">3.2.3</span> Animation in CSS</h3>
+    <p>
+      An animation is a set of <span class="term">keyframes</span> — snapshots of an element's style at
+      0% and 100% — plus a rule that says how long to take and how often to repeat. The browser
+      interpolates everything in between.
+    </p>
+    <pre><span class="t">@keyframes</span> spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+#box {
+  width: 100px; height: 100px; background: #b23b2e;
+  animation: spin 2s infinite linear;   <span class="c">/* name | duration | repeat | easing */</span>
+}</pre>
+    <aside class="callout">
+      <span class="tag">ANALOGY</span>
+      <p><span class="mono">@keyframes</span> is a flip-book: you draw only the first and last page,
+      and the browser draws all the pages in between at 60 per second.</p>
+    </aside>
+
+    <h3 class="sec" id="s3-5"><span class="n">3.3</span> JavaScript: making the page react</h3>
+    <p>
+      HTML and CSS produce a <em>static</em> page — the same thing on every visit. JavaScript makes it
+      <em>dynamic</em>: it responds to clicks, validates input, updates part of the page without a reload,
+      and builds menus and slideshows.
+    </p>
+    <h4>Arrays: one box with numbered slots</h4>
+    <p>
+      An <span class="term">array</span> stores many values in one variable. Indexing starts at
+      <strong>0</strong>, which is the single most common source of off-by-one marks.
+    </p>
+    <figure class="fig">
+      <svg viewBox="0 0 460 110" role="img" aria-label="Array fruits with apple at index zero, banana at one, orange at two">
+        <g>
+          <rect x="20" y="24" width="120" height="42" fill="var(--emerald-soft)" stroke="var(--emerald)"/>
+          <text x="80" y="51" text-anchor="middle" fill="var(--emerald)" font-weight="700">"apple"</text>
+          <rect x="140" y="24" width="120" height="42" fill="var(--surface-2)" stroke="var(--line)"/>
+          <text x="200" y="51" text-anchor="middle" fill="var(--ink-soft)">"banana"</text>
+          <rect x="260" y="24" width="120" height="42" fill="var(--surface-2)" stroke="var(--line)"/>
+          <text x="320" y="51" text-anchor="middle" fill="var(--ink-soft)">"orange"</text>
+        </g>
+        <g fill="var(--ink-faint)" text-anchor="middle">
+          <text x="80" y="84">index 0</text>
+          <text x="200" y="84">index 1</text>
+          <text x="320" y="84">index 2</text>
+        </g>
+        <text x="400" y="51" fill="var(--ink-faint)">fruits[1]</text>
+        <text x="400" y="68" fill="var(--emerald)">= banana</text>
+        <text x="20" y="102" fill="var(--ink-faint)">length = 3, so the last valid index is 2 — never 3.</text>
+      </svg>
+      <figcaption><span class="cap-n">Fig 3.2</span> const fruits = ["apple", "banana", "orange"] — position, not count.</figcaption>
+    </figure>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Method</th><th>Does</th></tr></thead>
+        <tbody>
+          <tr><td class="num">push(x)</td><td>adds x at the end</td></tr>
+          <tr><td class="num">indexOf(x)</td><td>returns the index of x, or −1</td></tr>
+          <tr><td class="num">toString()</td><td>joins all elements into one comma-separated string</td></tr>
+          <tr><td class="num">concat(other)</td><td>merges two arrays into a new one</td></tr>
+          <tr><td class="num">slice(a, b)</td><td>copies a subset, without changing the original</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <pre><span class="c">// a loop visits every element; the DOM shows the result</span>
+const fruits = [<span class="s">"apple"</span>, <span class="s">"banana"</span>, <span class="s">"orange"</span>];
+let text = <span class="s">""</span>;
+
+for (let i = 0; i &lt; fruits.length; i++) {
+  text += fruits[i] + (i &lt; fruits.length - 1 ? <span class="s">", "</span> : <span class="s">""</span>);
+}
+document.getElementById(<span class="s">"out"</span>).textContent = text;</pre>
+    <p>
+      <span class="mono">document.getElementById()</span> finds an element;
+      <span class="mono">.textContent</span> replaces its text. That pair is enough for most question-3
+      answers. A <span class="term">function</span> wraps repeated work under one name, so one definition
+      can be called many times.
+    </p>
+
+    <h3 class="sec" id="s3-6"><span class="n">3.4</span> Arrays vs lists</h3>
+    <p>
+      A <span class="term">list</span> is an ordered sequence — an Abstract Data Type, meaning we define
+      the operations ourselves. An array is JavaScript's built-in version of that idea. Both hold any
+      type, both grow and shrink, both are indexed from 0.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Array</th><th>List</th></tr></thead>
+        <tbody>
+          <tr><td>stored in contiguous memory</td><td>memory locations need not be contiguous</td></tr>
+          <tr><td>built into JavaScript with <span class="mono">[ ]</span></td><td>not built in; built from arrays or nodes</td></tr>
+          <tr><td>resizing may need rearrangement</td><td>resizes more easily</td></tr>
+          <tr><td>methods already provided</td><td>you define the operations</td></tr>
+          <tr><td>best for numbers and simple tasks</td><td>best when you need flexibility</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      To find an item you walk the list until it matches — the same linear search from Unit 2. If it is
+      found, return early; if the loop finishes without a match, report “not found”.
+    </p>
+
+    <h3 class="sec" id="s3-7"><span class="n">3.5</span> Testing and debugging</h3>
+    <p>
+      A <span class="term">unit test</span> checks one small piece of code in isolation with a known
+      input and an expected output. Two tests for a search function: search for an item that exists →
+      expect <span class="mono">true</span>; search for one that does not → expect
+      <span class="mono">false</span>. Tests catch errors early and let you refactor with confidence.
+    </p>
+    <p>
+      Debugging is observation, not guessing. A <span class="term">breakpoint</span> pauses execution on a
+      chosen line so you can inspect variables. A <span class="term">watchpoint</span> pauses when an
+      expression changes. Step over line by line and the bug reveals itself.
+    </p>
+    <pre><span class="c">// logical error: one trip too many, so the last read is undefined</span>
+for (let i = 0; i &lt;= fruits.length; i++) { ... }   <span class="c">// indices 0,1,2,3 — but 3 does not exist</span>
+
+<span class="c">// fix: use the strict less-than</span>
+for (let i = 0; i &lt; fruits.length; i++) { ... }</pre>
+    <aside class="callout tip">
+      <span class="tag">EXAM TIP</span>
+      <p>When asked to “find the error”, say <em>what</em> is wrong, <em>where</em> it is, and <em>what to
+      write instead</em>. An unclosed tag is a syntax error; a loop with the wrong start value is a
+      logical error.</p>
+    </aside>
+
+    <div class="qa">
+      <p class="lbl">QUICK CHECK</p>
+      <details>
+        <summary>Why does <span class="mono">myArray[3]</span> fail on a three-element array?</summary>
+        <div class="ans"><p>Indexing starts at 0, so a three-element array has valid indices 0, 1 and 2. Index 3 is one past the end and returns <span class="mono">undefined</span>.</p></div>
+      </details>
+      <details>
+        <summary>What is the difference between front-end and back-end?</summary>
+        <div class="ans"><p>The front-end is everything rendered and interacted with in the browser (HTML, CSS, JavaScript). The back-end is the server-side logic and database that processes requests and returns data.</p></div>
+      </details>
+      <details>
+        <summary>Which input type would you use for “choose one delivery method”?</summary>
+        <div class="ans"><p>Radio buttons, because they allow exactly one choice from a group that shares the same <span class="mono">name</span>.</p></div>
+      </details>
+    </div>
+
+    <div class="breath">
+      <h4>UNIT 3 IN ONE BREATH</h4>
+      <p>HTML gives structure (forms, tables, lists), CSS gives appearance and motion, and JavaScript gives
+      behaviour. Arrays hold collections, loops walk them, functions name the work, and tests plus
+      breakpoints prove the whole thing actually does what you claim.</p>
+    </div>
+  </section>
+
+  <!-- ============ UNIT 4 ============ -->
+  <section class="unit" id="unit4">
+    <header class="unit-head">
+      <span class="unit-no">Unit 04</span>
+      <h2>Data and Analysis</h2>
+      <p class="standfirst">
+        Data science finds the story, machine learning learns the pattern, and visualisation makes both
+        obvious to a human in one glance.
+      </p>
+      <div class="unit-grid">
+        <ul class="learn">
+          <li>Define data science, AI and machine learning, and tell them apart</li>
+          <li>Explain supervised, unsupervised and reinforcement learning with examples</li>
+          <li>Choose the right chart for a given dataset</li>
+          <li>Walk through all seven stages of the data science life cycle</li>
+          <li>Apply the cycle to a real business problem</li>
+        </ul>
+        <div class="keyterms">
+          <span class="chip">Turing test</span><span class="chip">labelled data</span>
+          <span class="chip">reinforcement</span><span class="chip">churn</span>
+          <span class="chip">KPI</span><span class="chip">cleaning</span>
+          <span class="chip">deployment</span><span class="chip">sentiment</span>
+        </div>
+      </div>
+    </header>
+
+    <h3 class="sec" id="s4-1"><span class="n">4.1</span> Data science, AI and machine learning</h3>
+    <p>
+      <span class="term">Data science</span> is the interdisciplinary field that combines mathematics,
+      statistics and computer science to extract insight from data — structured or unstructured. The work
+      runs through collection, cleaning, preprocessing and visualisation.
+    </p>
+    <p>
+      <span class="term">Artificial intelligence</span> is the ability of a machine to behave intelligently:
+      to reason, understand language and interact with its environment. The idea is old — Alan Turing
+      proposed his test in 1950 — but the current wave runs on data.
+    </p>
+    <p>
+      <span class="term">Machine learning</span> is the subset of AI where the system learns patterns from
+      data instead of being given explicit rules. It is the engine inside most of what people call “AI”.
+    </p>
+
+    <figure class="fig">
+      <svg viewBox="0 0 520 190" role="img" aria-label="Nested circles: data science and artificial intelligence overlap inside machine learning">
+        <circle cx="170" cy="95" r="78" fill="var(--blue-soft)" stroke="var(--blue)"/>
+        <text x="168" y="36" text-anchor="middle" fill="var(--blue)" font-weight="700">DATA SCIENCE</text>
+        <text x="168" y="138" text-anchor="middle" fill="var(--blue)" font-size="8">insight · statistics</text>
+
+        <circle cx="330" cy="95" r="78" fill="var(--emerald-soft)" stroke="var(--emerald)"/>
+        <text x="332" y="30" text-anchor="middle" fill="var(--emerald)" font-weight="700">ARTIFICIAL</text>
+        <text x="332" y="42" text-anchor="middle" fill="var(--emerald)" font-weight="700">INTELLIGENCE</text>
+        <text x="332" y="138" text-anchor="middle" fill="var(--emerald)" font-size="8">behaviour · reasoning</text>
+
+        <circle cx="250" cy="105" r="42" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="1.5"/>
+        <text x="250" y="101" text-anchor="middle" fill="var(--amber)" font-weight="700">MACHINE</text>
+        <text x="250" y="113" text-anchor="middle" fill="var(--amber)" font-weight="700">LEARNING</text>
+      </svg>
+      <figcaption><span class="cap-n">Fig 4.1</span> ML is the learning subset of AI; data science supplies the data and the interpretation.</figcaption>
+    </figure>
+
+    <aside class="callout">
+      <span class="tag">ANALOGY</span>
+      <p>Data science is a detective studying years of case files to find a pattern. Machine learning is a
+      trainee who learns the pattern by studying solved cases. AI is the whole police department behaving
+      intelligently — and the trainee works inside it.</p>
+    </aside>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Aspect</th><th>Data science</th><th>Artificial intelligence</th><th>Machine learning</th></tr></thead>
+        <tbody>
+          <tr><td>Goal</td><td>insight and informed decisions</td><td>machines that behave intelligently</td><td>learn patterns from data</td></tr>
+          <tr><td>Tools</td><td>statistics, data mining, visualisation</td><td>neural networks, expert systems, NLP</td><td>supervised, unsupervised, reinforcement, deep learning</td></tr>
+          <tr><td>Output</td><td>reports, charts, decisions</td><td>human-like behaviour</td><td>predictions and classifications</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>The three learning models</h4>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Model</th><th>Data given</th><th>How it learns</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Supervised</td><td><strong>labelled</strong> — questions with answers</td><td>maps input to the known output, then predicts for new input</td><td>fruit classifier trained on shape, colour, texture → name</td></tr>
+          <tr><td>Unsupervised</td><td><strong>unlabelled</strong></td><td>groups data by similarity and difference</td><td>news articles automatically sorted into politics, sport, health</td></tr>
+          <tr><td>Reinforcement</td><td>no dataset — feedback</td><td>agent acts, gets reward or penalty, improves</td><td>a chess player learning which opening wins</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <aside class="callout key">
+      <span class="tag">KEY IDEA</span>
+      <p>Ask: <strong>are the answers in the data?</strong> Labels present → supervised. No labels, find groups
+      → unsupervised. An agent chasing a goal → reinforcement.</p>
+    </aside>
+    <p>
+      Training follows four steps: split the clean data into training, testing and validation sets; pick an
+      algorithm (neural network, decision tree); train it to learn the pattern; then test it against data it
+      has never seen and compare with the real values.
+    </p>
+    <p>
+      Two business applications worth naming: <span class="term">churn prediction</span> estimates which
+      customers are about to leave, so offers can be sent before they do; <span class="term">behavioural
+      segmentation</span> groups customers by purchase frequency, brand loyalty and response to offers.
+      Keeping an existing customer is usually cheaper than winning a new one.
+    </p>
+
+    <h3 class="sec" id="s4-2"><span class="n">4.2</span> Data visualisation</h3>
+    <p>
+      Visualisation turns raw numbers into charts, graphs and maps so a human can see the pattern. The
+      skill being tested is <em>selection</em>: the right chart for the question.
+    </p>
+
+    <figure class="fig">
+      <svg viewBox="0 0 520 150" role="img" aria-label="Four small charts: bar, line, pie and scatter">
+        <g transform="translate(0,0)">
+          <text x="8" y="12" fill="var(--ink-soft)">BAR — compare</text>
+          <rect x="8" y="90" width="18" height="42" fill="var(--blue)" opacity=".55"/>
+          <rect x="34" y="60" width="18" height="72" fill="var(--blue)" opacity=".75"/>
+          <rect x="60" y="36" width="18" height="96" fill="var(--blue)"/>
+          <line x1="6" y1="133" x2="86" y2="133" stroke="var(--line-strong)"/>
+        </g>
+        <g transform="translate(130,0)">
+          <text x="8" y="12" fill="var(--ink-soft)">LINE — trend</text>
+          <polyline points="8,110 30,86 52,96 74,52 96,30" fill="none" stroke="var(--emerald)" stroke-width="2"/>
+          <line x1="6" y1="133" x2="100" y2="133" stroke="var(--line-strong)"/>
+        </g>
+        <g transform="translate(260,0)">
+          <text x="8" y="12" fill="var(--ink-soft)">PIE — parts of whole</text>
+          <circle cx="55" cy="82" r="40" fill="var(--amber-soft)" stroke="var(--amber)"/>
+          <path d="M55 82 L55 42 A40 40 0 0 1 92 99 Z" fill="var(--amber)" opacity=".65"/>
+          <path d="M55 82 L92 99 A40 40 0 0 1 30 114 Z" fill="var(--amber)" opacity=".35"/>
+        </g>
+        <g transform="translate(390,0)">
+          <text x="8" y="12" fill="var(--ink-soft)">SCATTER — relation</text>
+          <line x1="8" y1="133" x2="8" y2="30" stroke="var(--line-strong)"/>
+          <line x1="8" y1="133" x2="110" y2="133" stroke="var(--line-strong)"/>
+          <g fill="var(--oxblood)" opacity=".7">
+            <circle cx="26" cy="112" r="3"/><circle cx="40" cy="102" r="3"/><circle cx="52" cy="96" r="3"/>
+            <circle cx="66" cy="82" r="3"/><circle cx="76" cy="70" r="3"/><circle cx="88" cy="62" r="3"/>
+            <circle cx="98" cy="48" r="3"/>
+          </g>
+        </g>
+      </svg>
+      <figcaption><span class="cap-n">Fig 4.2</span> Four questions, four shapes: how much, over time, what share, what relationship.</figcaption>
+    </figure>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Chart</th><th>Answers</th><th>Use for</th></tr></thead>
+        <tbody>
+          <tr><td>Bar</td><td>how do discrete values compare?</td><td>marks per subject, sales per product</td></tr>
+          <tr><td>Line</td><td>how does it change over time?</td><td>gold prices, temperature, stock</td></tr>
+          <tr><td>Pie</td><td>what share of the whole?</td><td>market share of companies</td></tr>
+          <tr><td>Scatter</td><td>are two variables related?</td><td>height vs weight</td></tr>
+          <tr><td>Histogram</td><td>how is one value distributed?</td><td>distribution of test scores</td></tr>
+          <tr><td>Box plot</td><td>what is the spread?</td><td>salary ranges, min/quartile/median/max</td></tr>
+          <tr><td>Heatmap</td><td>where is the intensity highest?</td><td>weather maps, correlation matrices</td></tr>
+          <tr><td>Bubble</td><td>relationship plus a third variable</td><td>GDP vs life expectancy vs population</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      The textbook also groups visualisations by <em>type</em>: quantitative (numbers), categorical
+      (groups), temporal (time), spatial (place), multivariate (3+ variables), interactive (dashboards and
+      filters), statistical (distribution/correlation) and information visualisation (networks, treemaps,
+      word clouds).
+    </p>
+    <p>
+      Why it matters: it lets non-technical stakeholders understand complex data, speeds up decisions,
+      reveals trends and outliers that a table hides, and improves communication.
+    </p>
+
+    <h3 class="sec" id="s4-3"><span class="n">4.3</span> The data science life cycle</h3>
+    <p>Seven stages, and the process is a loop — evaluation often sends you back to modelling.</p>
+    <figure class="fig">
+      <svg viewBox="0 0 520 128" role="group" aria-label="Seven stages of the data science life cycle. Each stage can be selected.">
+        <g font-size="8">
+        <g class="layer" tabindex="0" role="button" aria-label="Problem definition" data-note="&lt;b&gt;1 · Problem definition&lt;/b&gt; — state the question, the scope and the limits, and set a KPI. Without this you can collect perfect data and still answer the wrong thing.">
+          <rect x="4" y="24" width="66" height="42" fill="var(--emerald-soft)" stroke="var(--emerald)"/>
+          <text x="37" y="40" text-anchor="middle" fill="var(--emerald)">1 Problem</text>
+          <text x="37" y="52" text-anchor="middle" fill="var(--emerald)">definition</text>
+        </g>
+        <g class="layer" tabindex="0" role="button" aria-label="Data collection" data-note="&lt;b&gt;2 · Collection&lt;/b&gt; — observe, survey, experiment, or pull from APIs. The output is raw data: messy, duplicated, incomplete.">
+          <rect x="78" y="24" width="66" height="42" fill="var(--surface-2)" stroke="var(--line-strong)"/>
+          <text x="111" y="40" text-anchor="middle" fill="var(--ink-soft)">2 Data</text>
+          <text x="111" y="52" text-anchor="middle" fill="var(--ink-soft)">collection</text>
+        </g>
+        <g class="layer" tabindex="0" role="button" aria-label="Data cleaning" data-note="&lt;b&gt;3 · Cleaning&lt;/b&gt; — remove duplicates and errors, fill or drop missing values, reshape columns. Usually the longest stage.">
+          <rect x="152" y="24" width="66" height="42" fill="var(--surface-2)" stroke="var(--line-strong)"/>
+          <text x="185" y="40" text-anchor="middle" fill="var(--ink-soft)">3 Data</text>
+          <text x="185" y="52" text-anchor="middle" fill="var(--ink-soft)">cleaning</text>
+        </g>
+        <g class="layer" tabindex="0" role="button" aria-label="Data analysis" data-note="&lt;b&gt;4 · Analysis&lt;/b&gt; — statistics and charts to find patterns. The output is insight, not a decision yet.">
+          <rect x="226" y="24" width="66" height="42" fill="var(--surface-2)" stroke="var(--line-strong)"/>
+          <text x="259" y="40" text-anchor="middle" fill="var(--ink-soft)">4 Data</text>
+          <text x="259" y="52" text-anchor="middle" fill="var(--ink-soft)">analysis</text>
+        </g>
+        <g class="layer" tabindex="0" role="button" aria-label="Data modelling" data-note="&lt;b&gt;5 · Modelling&lt;/b&gt; — apply a model, train it on historical data, and test it. This is where machine learning usually lives.">
+          <rect x="300" y="24" width="66" height="42" fill="var(--surface-2)" stroke="var(--line-strong)"/>
+          <text x="333" y="40" text-anchor="middle" fill="var(--ink-soft)">5 Data</text>
+          <text x="333" y="52" text-anchor="middle" fill="var(--ink-soft)">modelling</text>
+        </g>
+        <g class="layer" tabindex="0" role="button" aria-label="Model evaluation" data-note="&lt;b&gt;6 · Evaluation&lt;/b&gt; — judge accuracy, speed, cost and privacy. Poor results send you back to step 5, not to step 1.">
+          <rect x="374" y="24" width="66" height="42" fill="var(--surface-2)" stroke="var(--line-strong)"/>
+          <text x="407" y="40" text-anchor="middle" fill="var(--ink-soft)">6 Model</text>
+          <text x="407" y="52" text-anchor="middle" fill="var(--ink-soft)">evaluation</text>
+        </g>
+        <g class="layer" tabindex="0" role="button" aria-label="Deployment" data-note="&lt;b&gt;7 · Deployment &amp; monitoring&lt;/b&gt; — integrate the model into the live system, then watch it. Data drifts, so monitoring never stops.">
+          <rect x="448" y="24" width="66" height="42" fill="var(--blue-soft)" stroke="var(--blue)"/>
+          <text x="481" y="40" text-anchor="middle" fill="var(--blue)">7 Deploy</text>
+          <text x="481" y="52" text-anchor="middle" fill="var(--blue)">+ monitor</text>
+        </g>
+        </g>
+        <path d="M147 66 h330" stroke="var(--line)" stroke-dasharray="2 2"/>
+        <text x="266" y="82" fill="var(--ink-faint)">each stage's output is the next stage's input</text>
+        <path d="M481 92 C481 110 300 114 300 92" fill="none" stroke="var(--oxblood)" stroke-dasharray="3 3"/>
+        <text x="474" y="114" text-anchor="end" fill="var(--oxblood)">poor results → back to step 5</text>
+      </svg>
+      <p class="fig-note" aria-live="polite">Tap a stage to see what happens in it — swipe the chain sideways to reach stage 7.</p>
+      <figcaption><span class="cap-n">Fig 4.3</span> The seven stages; deployment is not the end, because monitoring is continuous.<span class="cap-tag">interactive</span></figcaption>
+    </figure>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Stage</th><th>What happens</th><th>Output</th></tr></thead>
+        <tbody>
+          <tr><td>1 Problem definition</td><td>state the question, scope, limitations; set KPIs</td><td>a hypothesis</td></tr>
+          <tr><td>2 Collection</td><td>observe, survey, experiment, or pull from APIs</td><td>raw data</td></tr>
+          <tr><td>3 Cleaning</td><td>remove duplicates and errors, fill missing values, reshape</td><td>analysis-ready data</td></tr>
+          <tr><td>4 Analysis</td><td>statistics and visualisation to find patterns</td><td>insight</td></tr>
+          <tr><td>5 Modelling</td><td>structure the data, test against historical data</td><td>a working model</td></tr>
+          <tr><td>6 Evaluation</td><td>accuracy, speed, cost, privacy compliance</td><td>pass or revise</td></tr>
+          <tr><td>7 Deployment &amp; monitoring</td><td>integrate, watch performance, update</td><td>live system</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      A <strong>KPI</strong> is a measurable target: “raise sales 15% in two months”, “make the site load 20%
+      faster in 30 days”. Without a KPI you cannot tell whether the model worked.
+    </p>
+    <aside class="callout code">
+      <span class="tag">CASE STUDY · smartphone inventory</span>
+      <p>A superstore wants popular phones in stock without over-buying. <strong>KPIs:</strong> never run out
+      of top sellers; cut dead stock. <strong>Data:</strong> sales history, stock levels, seasonality.
+      <strong>Analysis:</strong> which models sell fastest and which sit too long. <strong>Model:</strong>
+      predicts demand and raises a reorder alert. <strong>Evaluation:</strong> accuracy, timely alerts,
+      cost saving. <strong>Deploy:</strong> alerts in the existing sales software. <strong>Monitor:</strong>
+      tune reorder levels as tastes change.</p>
+    </aside>
+
+    <div class="qa">
+      <p class="lbl">QUICK CHECK</p>
+      <details>
+        <summary>A shop wants to group customers by buying habits, with no predefined groups. Which model?</summary>
+        <div class="ans"><p>Unsupervised learning — no labels exist, so the algorithm finds groupings (clusters) by similarity.</p></div>
+      </details>
+      <details>
+        <summary>Why is data cleaning not optional?</summary>
+        <div class="ans"><p>Because the model learns whatever is in the data. Duplicates, wrong values and missing fields produce an inaccurate model, and no amount of tuning fixes bad input.</p></div>
+      </details>
+      <details>
+        <summary>Which chart would show the market share of five phone brands?</summary>
+        <div class="ans"><p>A pie chart — the categories are parts of one whole (100% of the market). A bar chart would work for comparing them, but pie is the textbook answer for proportions.</p></div>
+      </details>
+    </div>
+
+    <div class="breath">
+      <h4>UNIT 4 IN ONE BREATH</h4>
+      <p>Data science extracts insight, ML learns patterns, AI behaves intelligently. Labels decide the learning
+      model; the question decides the chart; and the life cycle turns a vague business worry into a measured,
+      deployed, monitored system.</p>
+    </div>
+  </section>
+
+  <!-- ============ UNIT 5 ============ -->
+  <section class="unit" id="unit5">
+    <header class="unit-head">
+      <span class="unit-no">Unit 05</span>
+      <h2>Applications of Computer Science</h2>
+      <p class="standfirst">
+        Five technologies dominate this unit: things that sense, ledgers that cannot be quietly edited,
+        computing you rent, machines that understand speech, and robots that act on it.
+      </p>
+      <div class="unit-grid">
+        <ul class="learn">
+          <li>Name the five components of an IoT system and its real uses</li>
+          <li>Explain blockchain as a shared, tamper-resistant ledger</li>
+          <li>Compare public and private cloud, and the benefits of cloud computing</li>
+          <li>Separate speech recognition from voice recognition</li>
+          <li>Describe NLP and robotics applications, plus AI bias and designer responsibility</li>
+        </ul>
+        <div class="keyterms">
+          <span class="chip">IoT</span><span class="chip">sensor</span><span class="chip">blockchain</span>
+          <span class="chip">cryptocurrency</span><span class="chip">NLP</span><span class="chip">sentiment</span>
+          <span class="chip">Roomba</span><span class="chip">deepfake</span>
+        </div>
+      </div>
+    </header>
+
+    <h3 class="sec" id="s5-1"><span class="n">5.1–5.2</span> Internet of Things</h3>
+    <p>
+      The <span class="term">Internet of Things</span> is a network of everyday devices that sense the
+      world, send what they find to the cloud, and act on the result — machine talking to machine with
+      little human involvement.
+    </p>
+
+    <figure class="fig">
+      <svg viewBox="0 0 520 210" role="img" aria-label="The five IoT components in a loop: sensors, connectivity, cloud, data processing, user interface">
+        <circle cx="260" cy="105" r="86" fill="none" stroke="var(--line)" stroke-dasharray="3 4"/>
+        <g>
+          <rect x="196" y="12" width="128" height="34" fill="var(--emerald-soft)" stroke="var(--emerald)"/>
+          <text x="260" y="33" text-anchor="middle" fill="var(--emerald)">1 · SENSORS / DEVICES</text>
+          <rect x="378" y="88" width="128" height="34" fill="var(--surface-2)" stroke="var(--line-strong)"/>
+          <text x="442" y="109" text-anchor="middle" fill="var(--ink-soft)">2 · CONNECTIVITY</text>
+          <rect x="320" y="168" width="128" height="34" fill="var(--blue-soft)" stroke="var(--blue)"/>
+          <text x="384" y="189" text-anchor="middle" fill="var(--blue)">3 · CLOUD</text>
+          <rect x="72" y="168" width="140" height="34" fill="var(--surface-2)" stroke="var(--line-strong)"/>
+          <text x="142" y="189" text-anchor="middle" fill="var(--ink-soft)">4 · DATA PROCESSING</text>
+          <rect x="14" y="88" width="128" height="34" fill="var(--surface-2)" stroke="var(--line-strong)"/>
+          <text x="78" y="109" text-anchor="middle" fill="var(--ink-soft)">5 · USER INTERFACE</text>
+        </g>
+        <g fill="var(--ink-faint)" font-size="8">
+          <text x="260" y="100" text-anchor="middle">sense → send → store</text>
+          <text x="260" y="113" text-anchor="middle">→ analyse → show</text>
+          <text x="260" y="126" text-anchor="middle">→ act</text>
+        </g>
+        <g stroke="var(--emerald)" fill="none">
+          <path d="M324 34 C380 40 420 60 438 84" marker-end="url(#a1)"/>
+          <path d="M452 124 C456 152 430 168 452 178" marker-end="url(#a1)"/>
+          <path d="M318 186 H216" marker-end="url(#a1)"/>
+          <path d="M140 182 C108 172 80 152 76 126" marker-end="url(#a1)"/>
+          <path d="M84 84 C100 52 150 36 192 30" marker-end="url(#a1)"/>
+        </g>
+        <defs><marker id="a1" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto"><path d="M0 0 L5 3 L0 6 z" fill="var(--emerald)"/></marker></defs>
+      </svg>
+      <figcaption><span class="cap-n">Fig 5.1</span> The IoT loop. The cloud stores, processing makes sense of it, the interface shows it to a human.</figcaption>
+    </figure>
+
+    <p>
+      <strong>Sensors</strong> are the senses: temperature, humidity, pressure, light, proximity — a phone
+      already carries several. <strong>Connectivity</strong> is the road to the cloud (Wi-Fi, cellular,
+      Bluetooth, WAN). <strong>Data processing</strong> is the thinking: analytics platforms and machine
+      learning. <strong>User interface</strong> is the app or web page that shows you what is happening.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Application</th><th>What the sensors do</th></tr></thead>
+        <tbody>
+          <tr><td>Wearables</td><td>track heart rate, calories, distance, GPS</td></tr>
+          <tr><td>Healthcare</td><td>smart beds monitor blood pressure, oxygen and temperature in real time</td></tr>
+          <tr><td>Traffic</td><td>detect accidents, breakdowns and congestion; feed a control centre</td></tr>
+          <tr><td>Hospitality</td><td>adjust room temperature on entry, switch off appliances on exit, digital keys</td></tr>
+          <tr><td>Industry</td><td>watch vibration, temperature and product flow for quality and safety</td></tr>
+          <tr><td>Smart grid</td><td>two-way communication with consumers; accurate real-time billing</td></tr>
+          <tr><td>Farming</td><td>soil moisture, acidity, light; control irrigation and spot disease</td></tr>
+          <tr><td>Smart home</td><td>lighting, locks, cameras, air-conditioning controlled from an app</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sec" id="s5-2"><span class="n">5.4–5.5</span> Blockchain</h3>
+    <p>
+      A <span class="term">blockchain</span> is a digital ledger of transactions that keeps growing and
+      is shared across a network. Each block carries a fingerprint of the block before it, so changing an
+      old record breaks every block after it — which is what makes it tamper-resistant.
+    </p>
+    <figure class="fig">
+      <svg viewBox="0 0 520 130" role="img" aria-label="Three linked blockchain blocks, each containing a previous hash">
+        <g>
+          <rect x="10" y="22" width="140" height="76" fill="var(--emerald-soft)" stroke="var(--emerald)"/>
+          <text x="26" y="44" fill="var(--emerald)">BLOCK 01</text>
+          <text x="26" y="62" fill="var(--ink-soft)">tx: A → B</text>
+          <text x="26" y="78" fill="var(--ink-faint)">prev: 0000</text>
+          <text x="26" y="92" fill="var(--ink-faint)">hash: 7fa2</text>
+
+          <rect x="190" y="22" width="140" height="76" fill="var(--surface-2)" stroke="var(--line-strong)"/>
+          <text x="206" y="44" fill="var(--ink-soft)">BLOCK 02</text>
+          <text x="206" y="62" fill="var(--ink-soft)">tx: B → C</text>
+          <text x="206" y="78" fill="var(--ink-faint)">prev: 7fa2</text>
+          <text x="206" y="92" fill="var(--ink-faint)">hash: 91c0</text>
+
+          <rect x="370" y="22" width="140" height="76" fill="var(--surface-2)" stroke="var(--line-strong)" stroke-dasharray="4 3"/>
+          <text x="386" y="44" fill="var(--ink-faint)">BLOCK 03</text>
+          <text x="386" y="62" fill="var(--ink-faint)">tx: C → D</text>
+          <text x="386" y="78" fill="var(--ink-faint)">prev: 91c0</text>
+          <text x="386" y="92" fill="var(--ink-faint)">hash: …</text>
+        </g>
+        <path d="M150 60 H186" stroke="var(--ink-soft)" marker-end="url(#a2)"/>
+        <path d="M330 60 H366" stroke="var(--ink-soft)" marker-end="url(#a2)"/>
+        <defs><marker id="a2" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto"><path d="M0 0 L5 3 L0 6 z" fill="var(--ink-soft)"/></marker></defs>
+        <text x="10" y="120" fill="var(--ink-faint)">Edit block 01 and blocks 02 and 03 no longer match — that is the security.</text>
+      </svg>
+      <figcaption><span class="cap-n">Fig 5.2</span> A chain, not a pile: each block seals the one before it.</figcaption>
+    </figure>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Use</th><th>Why blockchain helps</th></tr></thead>
+        <tbody>
+          <tr><td>Supply chain</td><td>real-time location as goods change hands; transparent and hard to alter</td></tr>
+          <tr><td>Healthcare</td><td>data integrity, patient authentication, access control, medical records</td></tr>
+          <tr><td>Copyright</td><td>timestamped proof of ownership; unauthorised downloads can be traced</td></tr>
+          <tr><td>Voting</td><td>voter privacy and transparency; fraud harder (still under research)</td></tr>
+          <tr><td>Cryptocurrency</td><td>peer-to-peer payments with no bank in the middle</td></tr>
+          <tr><td>Digital assets</td><td>decentralised, transparent ownership records</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      <span class="term">Cryptocurrency</span> is digital money recorded on a blockchain, working through a
+      global peer-to-peer network with no central clearing authority. Bitcoin is the best-known example.
+    </p>
+
+    <h3 class="sec" id="s5-3"><span class="n">5.6</span> Cloud computing</h3>
+    <p>
+      Cloud computing delivers servers, storage, databases, networking and software over the internet,
+      paid for as you use it. Instead of buying a server that sits idle, you rent capacity that grows with
+      demand.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Benefit</th><th>What it means in practice</th></tr></thead>
+        <tbody>
+          <tr><td>Cost reduction</td><td>no hardware purchase, no maintenance team</td></tr>
+          <tr><td>Security</td><td>provider keeps systems patched and restores from backups</td></tr>
+          <tr><td>Quick access</td><td>reach services from any device, anywhere</td></tr>
+          <tr><td>Scalability</td><td>scale up or down with demand, without new hardware</td></tr>
+          <tr><td>Collaboration</td><td>teams work on the same files from anywhere</td></tr>
+          <tr><td>Automation</td><td>backups and updates run without staff</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Common uses: file storage (Drive, OneDrive), backup, education (Google Classroom, Coursera),
+      e-commerce, social networks, communication (Teams, Zoom) and cloud gaming.
+    </p>
+    <aside class="callout">
+      <span class="tag">ANALOGY</span>
+      <p>On-premises hosting is owning a generator. Cloud is the electricity grid: you pay for the units you
+      use, someone else maintains the plant, and you can draw more power in summer without buying a
+      bigger generator.</p>
+    </aside>
+
+    <h3 class="sec" id="s5-4"><span class="n">5.7</span> Speech and voice recognition</h3>
+    <p>
+      They sound alike but answer different questions. <span class="term">Speech recognition</span> turns
+      <em>what you said</em> into text — dictation, call centres, medical notes, subtitles.
+      <span class="term">Voice recognition</span> identifies <em>who said it</em> by the unique
+      characteristics of the voice — a biometric password, criminal investigation, national security.
+    </p>
+    <p>
+      Applications also include AI assistants (Siri, Alexa, Cortana), Quran memorisation apps with
+      recitation and mistake detection, and live language translation.
+    </p>
+
+    <h3 class="sec" id="s5-5"><span class="n">5.8</span> Natural Language Processing</h3>
+    <p>
+      <span class="term">NLP</span> is the branch of AI that lets a computer understand written and spoken
+      language the way a human does — meaning, not just keywords.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Application</th><th>What the NLP does</th></tr></thead>
+        <tbody>
+          <tr><td>Email filtering</td><td>spots spam by the words and phrases it contains</td></tr>
+          <tr><td>Translation</td><td>converts speech or text between languages using ML and deep learning</td></tr>
+          <tr><td>Document analysis</td><td>extracts and categorises information from piles of files</td></tr>
+          <tr><td>Predictive text</td><td>suggests the next words as you type or search</td></tr>
+          <tr><td>Sentiment analysis</td><td>decides whether a review is positive, negative or neutral</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <aside class="callout tip">
+      <span class="tag">EXAM TIP</span>
+      <p>If the question says “understand text or speech like a human”, the answer is NLP. If it says
+      “convert speech to text”, it is speech recognition. If it says “identify a person by voice”, it is
+      voice recognition. Matching the wording earns the mark.</p>
+    </aside>
+
+    <h3 class="sec" id="s5-6"><span class="n">5.9</span> Robotics</h3>
+    <p>
+      Robotics combines AI with engineering to build machines that perform tasks humans would otherwise
+      do — often in places humans should not be.
+    </p>
+    <ul class="plain">
+      <li><strong>Rescue:</strong> firefighting, earthquakes, floods, rubble removal, supply delivery.</li>
+      <li><strong>Manufacturing:</strong> assembly, welding, painting, packaging — repetitive and dangerous work.</li>
+      <li><strong>Domestic:</strong> Roomba-style vacuum cleaners that map a room, avoid obstacles and dock themselves.</li>
+      <li><strong>Farming:</strong> harvesting, spraying, grafting, palletising, drone surveillance.</li>
+      <li><strong>Space:</strong> sample collection, repairs, unmanned missions — no food, water or oxygen needed.</li>
+      <li><strong>Healthcare:</strong> surgical assistance, sanitising rooms, delivering medicine and supplies.</li>
+    </ul>
+
+    <h3 class="sec" id="s5-7"><span class="n">5.10–5.11</span> Bias, ethics and responsibility</h3>
+    <p>
+      AI learns from human data, so it inherits human unfairness. <span class="term">Bias</span> is
+      discrimination by race, ethnicity, gender or age; <span class="term">unethical use</span> is morally
+      wrong use, such as violating privacy or gaining unauthorised access.
+    </p>
+    <p>
+      In 2015 Amazon found its hiring algorithm favoured men, because it had been trained on ten years of
+      résumés that were mostly male. Facial recognition has similarly produced worse results for people
+      with darker skin tones — a mistake that can ruin someone in a criminal investigation.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Unethical use</th><th>What it looks like</th></tr></thead>
+        <tbody>
+          <tr><td>Privacy breach</td><td>collecting or exposing personal data without consent</td></tr>
+          <tr><td>Social manipulation</td><td>spreading propaganda, manipulating trends and opinions</td></tr>
+          <tr><td>Cyber security threat</td><td>using AI to break into systems, steal identity or money</td></tr>
+          <tr><td>Market manipulation</td><td>rigging stock prices and destabilising markets</td></tr>
+          <tr><td>Deepfakes</td><td>realistic fake video of someone saying what they never said</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Designers therefore owe users fairness, transparency and impartiality; privacy protection; avoidance
+      of harm; and a genuine benefit to humanity. These are the five duties to quote in a long answer.
+    </p>
+
+    <div class="qa">
+      <p class="lbl">QUICK CHECK</p>
+      <details>
+        <summary>Why can a blockchain record not simply be edited later?</summary>
+        <div class="ans"><p>Each block stores the hash of the previous block. Altering one block changes its hash, so every later block fails to match and the tampering becomes visible across the shared copies.</p></div>
+      </details>
+      <details>
+        <summary>Name the five components of an IoT system.</summary>
+        <div class="ans"><p>Sensors/devices, connectivity, cloud storage, data processing, and the user interface.</p></div>
+      </details>
+      <details>
+        <summary>Why is cloud computing described as “pay as you go”?</summary>
+        <div class="ans"><p>You rent computing resources and are charged for what you consume, instead of buying hardware outright. Capacity can grow or shrink with demand.</p></div>
+      </details>
+    </div>
+
+    <div class="breath">
+      <h4>UNIT 5 IN ONE BREATH</h4>
+      <p>IoT senses and reports; blockchain records without letting anyone quietly rewrite history; the cloud
+      rents out the computing; NLP and speech let machines handle human language; robots act in the physical
+      world. The more power these systems have, the more the designer's ethics matter.</p>
+    </div>
+  </section>
+
+  <!-- ============ UNIT 6 ============ -->
+  <section class="unit" id="unit6">
+    <header class="unit-head">
+      <span class="unit-no">Unit 06</span>
+      <h2>Impacts of Computing</h2>
+      <p class="standfirst">
+        The same network that teaches you a skill can cost you your sleep, your data or your reputation.
+        This unit is about using it well — and about who gets left out.
+      </p>
+      <div class="unit-grid">
+        <ul class="learn">
+          <li>Explain technology addiction and its effects</li>
+          <li>Distinguish spam, spyware and cookies as privacy threats</li>
+          <li>Compare hardware and software methods of protection</li>
+          <li>Define cybersecurity and recognise cyberbullying and its prevention</li>
+          <li>Describe the digital divide and inequitable access to information</li>
+        </ul>
+        <div class="keyterms">
+          <span class="chip">addiction</span><span class="chip">spam</span><span class="chip">spyware</span>
+          <span class="chip">cookie</span><span class="chip">public cloud</span><span class="chip">VPN</span>
+          <span class="chip">secure boot</span><span class="chip">digital divide</span>
+        </div>
+      </div>
+    </header>
+
+    <h3 class="sec" id="s6-1"><span class="n">6.1</span> Technology addiction</h3>
+    <p>
+      <span class="term">Technology addiction</span> is excessive, compulsive use of phones, computers,
+      games or social media that damages daily life, relationships or wellbeing — like gambling, the
+      compulsion matters more than the amount of time.
+    </p>
+    <p>
+      The test is not “how long?” but “does it hurt, and can you stop?”. The effects cluster into three
+      groups: <strong>mental</strong> (anxiety, depression, comparison with others, isolation, less
+      face-to-face contact); <strong>academic and work</strong> (constant distraction, lower grades,
+      reduced productivity); and <strong>privacy</strong> (oversharing, higher exposure to scams).
+    </p>
+    <aside class="callout">
+      <span class="tag">ANALOGY</span>
+      <p>A notification is a vending machine for attention: one small pull, an instant reward, and soon you
+      are reaching for it without deciding to. The fix is not willpower alone but removing the machine from
+      the room.</p>
+    </aside>
+
+    <h3 class="sec" id="s6-2"><span class="n">6.2</span> The internet, both ways</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>For good</th><th>For harm</th></tr></thead>
+        <tbody>
+          <tr><td>Information and education</td><td>Cybercrime — hacking, identity theft, fraud, malware</td></tr>
+          <tr><td>Global communication and cultural exchange</td><td>Harassment, bullying, trolling</td></tr>
+          <tr><td>Telemedicine and health information</td><td>Cyberterrorism — attacks for political fear</td></tr>
+          <tr><td>Support communities</td><td>Illegal and pirated content</td></tr>
+          <tr><td>Political engagement and transparency</td><td>Hate speech, misinformation, disinformation</td></tr>
+          <tr><td>Research collaboration</td><td>Scams, phishing, fake websites, cyber espionage</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      <span class="term">Phishing</span> pretends to be someone trustworthy to get your password;
+      a <span class="term">fake website</span> imitates a real one to steal data or install malware.
+      Both rely on you not checking the address bar.
+    </p>
+
+    <h3 class="sec" id="s6-3"><span class="n">6.3</span> Spam, spyware and cookies</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Threat</th><th>What it is</th><th>How it harms</th><th>Defence</th></tr></thead>
+        <tbody>
+          <tr><td>Spam</td><td>unwanted bulk email</td><td>ads, trick links, malware attachments</td><td>filters, throw-away address, never click</td></tr>
+          <tr><td>Spyware</td><td>software that secretly watches you</td><td>records keystrokes and screens, steals passwords and identity</td><td>updated antivirus, no untrusted downloads</td></tr>
+          <tr><td>Cookies</td><td>small files that remember your activity</td><td>some track you across sites without consent</td><td>browser settings, block third-party cookies</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sec" id="s6-4"><span class="n">6.4</span> Cloud: public and private</h3>
+    <p>
+      A <span class="term">public cloud</span> is owned by a provider and shared by many customers over the
+      internet. A <span class="term">private cloud</span> is used by one organisation only, usually inside its
+      own data centre, giving more control over data.
+    </p>
+    <p>
+      Securing either one comes down to five controls: <strong>encryption</strong> in transit and at rest;
+      <strong>access control</strong> with least privilege and multi-factor authentication;
+      <strong>monitoring and incident response</strong>; <strong>privacy policies</strong> and data
+      minimisation; and <strong>network security</strong> with firewalls, segmentation and a VPC.
+    </p>
+
+    <h3 class="sec" id="s6-5"><span class="n">6.5</span> Protecting a device</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Hardware methods</th><th>Software methods</th></tr></thead>
+        <tbody>
+          <tr><td>Biometric authentication (fingerprint, face)</td><td>Antivirus and anti-malware</td></tr>
+          <tr><td>Secure boot — only trusted software starts</td><td>Operating system and app updates</td></tr>
+          <tr><td>Hardware firewall</td><td>Software firewall</td></tr>
+          <tr><td>—</td><td>Password manager, strong passwords</td></tr>
+          <tr><td>—</td><td>VPN for encrypted, private connections</td></tr>
+          <tr><td>—</td><td>Regular data backup</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <aside class="callout key">
+      <span class="tag">KEY IDEA</span>
+      <p>Hardware locks the door; software watches the window. Neither is enough alone — the textbook always
+      wants “both”.</p>
+    </aside>
+
+    <h3 class="sec" id="s6-6"><span class="n">6.6</span> Cybersecurity</h3>
+    <p>
+      <span class="term">Cybersecurity</span> is the practice of protecting systems, networks and data from
+      unauthorised access and attack, preserving <strong>confidentiality, integrity and availability</strong>.
+      It matters because our financial records, medical histories and identities now live online.
+    </p>
+    <p>
+      <strong>Cybercrime laws</strong> define the offences and the punishments, and tell police how to
+      investigate. Common crimes include hacking, identity theft, phishing, malware, data breaches,
+      cyberbullying, intellectual-property theft and cyberterrorism.
+    </p>
+    <h4>Where to report</h4>
+    <p>
+      Local police or a dedicated cybercrime unit; government cybersecurity agencies with hotlines and
+      portals; your internet service provider, if the abuse runs through its network; banks or financial
+      institutions for fraudulent transactions; and official online reporting portals, some of which allow
+      anonymous reports.
+    </p>
+
+    <h3 class="sec" id="s6-7"><span class="n">6.7–6.8</span> Safety, security and cyberbullying</h3>
+    <p>
+      Safety on social media is a shared job — platforms, policymakers, teachers, parents and users. Three
+      pressures dominate: <strong>privacy</strong> (adjust settings, share less), <strong>harassment</strong>
+      (report, block, support the victim) and <strong>peer pressure</strong> (build the confidence to
+      refuse).
+    </p>
+    <p>
+      <span class="term">Cyberbullying</span> is using digital tools to hurt, threaten or humiliate — mean
+      messages, rumours, leaked private information, in games or on social media. It follows you home, so
+      its effects are persistent: anxiety, depression, low self-esteem, falling grades, social isolation,
+      headaches and sleep loss.
+    </p>
+    <ul class="plain">
+      <li>Teach digital literacy and empathy.</li>
+      <li>Parents involved, with agreed rules.</li>
+      <li>Clear school and workplace anti-bullying policies.</li>
+      <li>Anonymous reporting that is acted on quickly.</li>
+      <li>Platforms that remove harmful content and ban repeat offenders.</li>
+    </ul>
+
+    <h3 class="sec" id="s6-9"><span class="n">6.9</span> Environmental, cultural and human impact</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Dimension</th><th>Gain</th><th>Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Environmental</td><td>efficiency, remote work</td><td>high electricity demand, e-waste, harmful materials</td></tr>
+          <tr><td>Cultural</td><td>cross-cultural contact, shared learning</td><td>less face-to-face contact; a widening digital gap</td></tr>
+          <tr><td>Human</td><td>assistive tech helps people with disabilities learn, work and communicate</td><td>addiction, stress, less physical activity, constant re-skilling</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      <strong>Assistive technologies</strong> — screen readers, speech-to-text, prosthetics, smart home
+      controls — are computing at its most valuable: they restore participation rather than replace it.
+    </p>
+
+    <h3 class="sec" id="s6-10"><span class="n">6.10–6.11</span> The digital divide</h3>
+    <p>
+      The <span class="term">digital divide</span> is the gap between those with reliable access to
+      technology and the skills to use it, and those without. It has three layers:
+    </p>
+    <figure class="fig">
+      <svg viewBox="0 0 520 130" role="img" aria-label="Three widening gaps: access, usage and participation">
+        <g font-size="9" fill="var(--ink-soft)">
+          <text x="10" y="26">ACCESS</text>
+          <rect x="110" y="14" width="300" height="16" fill="var(--emerald-soft)" stroke="var(--emerald)"/>
+          <rect x="410" y="14" width="90" height="16" fill="var(--surface-2)" stroke="var(--line-strong)" stroke-dasharray="3 3"/>
+          <text x="455" y="26" text-anchor="middle" fill="var(--ink-faint)">gap</text>
+
+          <text x="10" y="66">USAGE</text>
+          <rect x="110" y="54" width="230" height="16" fill="var(--emerald-soft)" stroke="var(--emerald)"/>
+          <rect x="340" y="54" width="160" height="16" fill="var(--surface-2)" stroke="var(--line-strong)" stroke-dasharray="3 3"/>
+          <text x="420" y="66" text-anchor="middle" fill="var(--ink-faint)">skills, relevance</text>
+
+          <text x="10" y="106">PARTICIPATION</text>
+          <rect x="110" y="94" width="165" height="16" fill="var(--emerald-soft)" stroke="var(--emerald)"/>
+          <rect x="275" y="94" width="225" height="16" fill="var(--surface-2)" stroke="var(--line-strong)" stroke-dasharray="3 3"/>
+          <text x="388" y="106" text-anchor="middle" fill="var(--ink-faint)">opportunity and services</text>
+        </g>
+      </svg>
+      <figcaption><span class="cap-n">Fig 6.1</span> Solving one layer does not close the others: a connection without skills still leaves people out.</figcaption>
+    </figure>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Layer</th><th>The gap</th></tr></thead>
+        <tbody>
+          <tr><td>Access divide</td><td>no infrastructure (rural broadband), or unaffordable devices and data</td></tr>
+          <tr><td>Usage divide</td><td>low digital literacy; content not in your language or not relevant</td></tr>
+          <tr><td>Participation / global divide</td><td>fewer online opportunities, services and jobs; richer vs poorer countries</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      The consequence is <strong>inequitable access to information</strong>: a student in a village with a
+      weak connection cannot reach the same lessons, health advice or job listings as a student in the city.
+      That is not a technology problem alone — it is an equality problem, and the remedies are cheaper data,
+      shared devices, public access points and digital-literacy training.
+    </p>
+
+    <div class="qa">
+      <p class="lbl">QUICK CHECK</p>
+      <details>
+        <summary>Is all heavy phone use addiction?</summary>
+        <div class="ans"><p>No. The defining feature is harm plus loss of control: the use damages sleep, study, work or relationships and the person cannot cut back.</p></div>
+      </details>
+      <details>
+        <summary>Why is secure boot a hardware defence?</summary>
+        <div class="ans"><p>It is enforced by the firmware before the operating system loads, checking that only trusted, signed software starts — so malware cannot hijack the boot process.</p></div>
+      </details>
+      <details>
+        <summary>Give one access divide and one usage divide example.</summary>
+        <div class="ans"><p>Access: a rural area with no broadband. Usage: a person with a connection but no digital skills, or no content in their own language.</p></div>
+      </details>
+    </div>
+
+    <div class="breath">
+      <h4>UNIT 6 IN ONE BREATH</h4>
+      <p>Computing gives access, speed and connection, and charges for them in attention, privacy and
+      electricity. Protect the device with hardware and software, protect the person with boundaries and
+      reporting, and remember that equal access is still not equal.</p>
+    </div>
+  </section>
+
+  <!-- ============ REVISION ============ -->
+  <section class="end" id="revision">
+    <span class="unit-no">The last page</span>
+    <h2>Twelve facts worth memorising</h2>
+    <p>If you revise nothing else the night before, revise these. Each is a one-mark answer waiting to happen.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>#</th><th>Fact</th><th>Unit</th></tr></thead>
+        <tbody>
+          <tr><td class="num">01</td><td>1 byte = 8 bits; 8 unsigned bits hold 0–255, signed bits hold −128 to 127.</td><td class="num">1</td></tr>
+          <tr><td class="num">02</td><td>One hex digit = 4 bits; one octal digit = 3 bits. Place value does all conversion.</td><td class="num">1</td></tr>
+          <tr><td class="num">03</td><td>1's complement flips bits; 2's complement flips then adds 1. The sign bit is the leftmost bit.</td><td class="num">1</td></tr>
+          <tr><td class="num">04</td><td>ASCII = 7-bit, 128 characters. Unicode = 100,000+ characters, stored as UTF-8/16/32.</td><td class="num">1</td></tr>
+          <tr><td class="num">05</td><td>An algorithm is finite, definite, effective, general, with input and output.</td><td class="num">2</td></tr>
+          <tr><td class="num">06</td><td>Order matters → permutation; order irrelevant → combination. Overlapping sets → include–exclude.</td><td class="num">2</td></tr>
+          <tr><td class="num">07</td><td>Binary search halves a <em>sorted</em> list; linear search works on any list.</td><td class="num">2</td></tr>
+          <tr><td class="num">08</td><td>Front-end = HTML/CSS/JS in the browser; back-end = server logic and database.</td><td class="num">3</td></tr>
+          <tr><td class="num">09</td><td>Array indices start at 0; the last index is length − 1.</td><td class="num">3</td></tr>
+          <tr><td class="num">10</td><td>Supervised = labelled data; unsupervised = unlabelled; reinforcement = reward and penalty.</td><td class="num">4</td></tr>
+          <tr><td class="num">11</td><td>IoT loop: sensors → connectivity → cloud → processing → user interface.</td><td class="num">5</td></tr>
+          <tr><td class="num">12</td><td>Cyber security = confidentiality, integrity, availability. Digital divide = access, usage, participation.</td><td class="num">6</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="fine">
+      Notes summarised from <em>Textbook of Computer Science, Grade 10</em> (National Book Foundation as
+      Federal Textbook Board, Islamabad, first edition 2025, ISBN 978-969-37-1725-9), Units 1–6.
+      Wording is deliberately condensed and rephrased for revision; diagrams are redrawn, not scanned.
+      For exam answers, always follow the definitions used in your textbook and the guidance of your teacher.
+    </p>
+  </section>
+
+</main>
+
+<button class="top" id="toTop" type="button" aria-label="Back to top">↑</button>
+
+<script>
+/* ---------- progress bar + active unit ---------- */
+(function(){
+  var bar = document.getElementById('bar');
+  var nav = document.querySelector('.unitnav');
+  var links = Array.prototype.slice.call(document.querySelectorAll('.unitnav a'));
+  var units = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  var ticking = false;
+  var last = -2;
+  function reveal(i){
+    var a = links[i];
+    if (!a || !nav || i === last) return;
+    last = i;
+    var left = a.offsetLeft - nav.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2;
+    var soft = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    if (nav.scrollTo) nav.scrollTo({left:left, behavior:soft});
+    else nav.scrollLeft = left;
+  }
+
+  function update(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    bar.style.width = pct + '%';
+
+    var head = document.querySelector('.site-head');
+    var cutoff = (head ? head.getBoundingClientRect().bottom : 80) + 20;
+    var current = -1;
+    units.forEach(function(u, i){
+      if (u && u.getBoundingClientRect().top <= cutoff) current = i;
+    });
+    links.forEach(function(a, i){
+      var on = i === current;
+      a.classList.toggle('on', on);
+      if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+    if (current > -1) reveal(current);
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if (!ticking){ ticking = true; requestAnimationFrame(update); }
+  }, {passive:true});
+  window.addEventListener('resize', update);
+  update();
+})();
+
+/* ---------- theme ---------- */
+(function(){
+  var btn = document.getElementById('theme');
+  try {
+    var saved = localStorage.getItem('cs10-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  } catch(e){}
+  btn.addEventListener('click', function(){
+    var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('cs10-theme', next); } catch(e){}
+  });
+})();
+
+/* ---------- back to top ---------- */
+(function(){
+  var b = document.getElementById('toTop');
+  window.addEventListener('scroll', function(){
+    b.classList.toggle('show', window.scrollY > 700);
+  }, {passive:true});
+  b.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+})();
+
+/* ---------- decimal → binary converter ---------- */
+(function(){
+  var input = document.getElementById('decInput');
+  var out = document.getElementById('binOut');
+  var note = document.getElementById('binNote');
+  if (!input) return;
+  function render(){
+    var n = Number(input.value);
+    if (input.value === '' || !Number.isFinite(n) || n < 0 || n > 255 || Math.floor(n) !== n){
+      out.textContent = 'enter 0–255';
+      out.classList.add('err');
+      note.textContent = 'That value does not fit in 8 bits.';
+      return;
+    }
+    out.classList.remove('err');
+    out.textContent = n.toString(2).padStart(8, '0');
+    note.textContent = 'Place values used: ' + n.toString(2).split('')
+      .map(function(bit, i){ return bit === '1' ? Math.pow(2, 7 - i) : null; })
+      .filter(function(v){ return v !== null; }).join(' + ') || '0';
+  }
+  input.addEventListener('input', render);
+  render();
+})();
+
+/* ---------- interactive figures: tap a layer or a stage ---------- */
+(function(){
+  var groups = document.querySelectorAll('.fig g.layer');
+  if (!groups.length) return;
+  Array.prototype.forEach.call(groups, function(g){
+    function pick(){
+      var fig = g.closest('figure');
+      var out = fig.querySelector('.fig-note');
+      Array.prototype.forEach.call(fig.querySelectorAll('g.layer'), function(o){
+        o.classList.remove('on');
+        o.setAttribute('aria-pressed', 'false');
+      });
+      g.classList.add('on');
+      g.setAttribute('aria-pressed', 'true');
+      if (out) out.innerHTML = g.getAttribute('data-note');
+    }
+    g.setAttribute('aria-pressed', 'false');
+    g.addEventListener('click', pick);
+    g.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); pick(); }
+    });
+  });
+})();
+
+/* ---------- binary search, one step at a time ---------- */
+(function(){
+  var stage = document.getElementById('bsStage');
+  if (!stage) return;
+  var data = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91], target = 38;
+  var lo, hi, mid, checks, done, found;
+  var next = document.getElementById('bsNext');
+  var reset = document.getElementById('bsReset');
+  var status = document.getElementById('bsStatus');
+  var meta = document.getElementById('bsMeta');
+
+  function begin(){ lo = 0; hi = data.length - 1; mid = -1; checks = 0; done = false; found = false; }
+
+  function cells(){
+    var n = data.length, gap = 4, w = (408 - gap * (n - 1)) / n, x0 = 6, svg = '', i;
+    for (i = 0; i < n; i++){
+      var x = x0 + i * (w + gap);
+      var state = (done && found && i === mid) ? 'hit' : (i === mid ? 'mid' : ((i < lo || i > hi) ? 'gone' : 'plain'));
+      var fill = state === 'hit' ? 'var(--emerald-soft)' : state === 'mid' ? 'var(--amber-soft)' : 'var(--surface-2)';
+      var stroke = state === 'hit' ? 'var(--emerald)' : state === 'mid' ? 'var(--amber)' : 'var(--line)';
+      var colour = state === 'hit' ? 'var(--emerald)' : state === 'mid' ? 'var(--amber)' : 'var(--ink-soft)';
+      svg += '<rect x="' + x + '" y="14" width="' + w + '" height="34" rx="1.5" fill="' + fill +
+             '" stroke="' + stroke + '"' + (state === 'gone' ? ' stroke-dasharray="3 3"' : '') + '/>' +
+             '<text x="' + (x + w / 2) + '" y="36" text-anchor="middle" fill="' + colour + '"' +
+             (state === 'hit' ? ' font-weight="700"' : '') + '>' + data[i] + '</text>';
+    }
+    var bar = '';
+    if (hi >= lo){
+      var bx = x0 + lo * (w + gap);
+      var bw = (hi - lo + 1) * w + (hi - lo) * gap;
+      bar = '<line x1="' + bx + '" y1="62" x2="' + (bx + bw) + '" y2="62" stroke="var(--emerald)" stroke-width="1.2"/>' +
+            '<line x1="' + bx + '" y1="57" x2="' + bx + '" y2="67" stroke="var(--emerald)" stroke-width="1.2"/>' +
+            '<line x1="' + (bx + bw) + '" y1="57" x2="' + (bx + bw) + '" y2="67" stroke="var(--emerald)" stroke-width="1.2"/>' +
+            '<text x="' + (bx + bw / 2) + '" y="81" text-anchor="middle" fill="var(--ink-faint)">' +
+            (hi - lo + 1) + ' value' + (hi === lo ? '' : 's') + ' still searched</text>';
+    }
+    stage.innerHTML = '<svg viewBox="0 0 420 92" role="img" aria-label="Ten sorted values with the current search range marked">' + svg + bar + '</svg>';
+  }
+
+  function message(){
+    if (!checks) return 'Press “Next step”. The middle value is ' + data[Math.floor((data.length - 1) / 2)] + '.';
+    if (done && found) return 'Found ' + target + ' after ' + checks + ' checks — 10 items only need ' + Math.ceil(Math.log2(10)) + ' at most.';
+    if (done) return target + ' is not in the list; the search ended after ' + checks + ' checks.';
+    return 'Checked ' + data[mid] + ' — target is ' + (data[mid] < target ? 'larger, so keep the right half' : 'smaller, so keep the left half') +
+           ' · ' + (hi - lo + 1) + ' values left.';
+  }
+
+  function render(){
+    cells();
+    status.textContent = message();
+    meta.textContent = 'target ' + target + ' · ' + checks + ' check' + (checks === 1 ? '' : 's');
+    next.disabled = !!done;
+  }
+
+  next.addEventListener('click', function(){
+    if (done) return;
+    mid = Math.floor((lo + hi) / 2);
+    checks++;
+    if (data[mid] === target){ done = true; found = true; lo = hi = mid; }
+    else if (data[mid] < target){ lo = mid + 1; if (lo > hi) done = true; }
+    else { hi = mid - 1; if (lo > hi) done = true; }
+    render();
+  });
+  reset.addEventListener('click', function(){ begin(); render(); });
+
+  begin();
+  render();
+})();
+</script>
+</body>
+</html>
